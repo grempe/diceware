@@ -23,10 +23,11 @@ function addCommas (nStr) {
 
 // Security Function. Returns the CSPRNG bytes.
 function getRandomByteArray (numElements) {
-  numElements = parseInt(numElements, 10)
-  var randomBytes = new Uint32Array(numElements)
-  window.crypto.getRandomValues(randomBytes)
-  return randomBytes
+  numElements = parseInt(numElements, 10);
+  var randomBytes = new Uint32Array(numElements);
+  var objCrypto = window.crypto || window.msCrypto;
+  objCrypto.getRandomValues(randomBytes);
+  return randomBytes;
 }
 
 // Use a cryptographically strong random number generator
