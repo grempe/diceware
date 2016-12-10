@@ -164,6 +164,9 @@ function getWordFromWordNum (wordNum) {
       case 'alternative':
         word = alternative[wordNum]
         break
+      case 'basque':
+        word = basque[wordNum]
+        break
       case 'catalan':
         word = catalan[wordNum]
         break
