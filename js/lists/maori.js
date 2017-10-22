@@ -7774,5 +7774,5 @@ var maori = {
 66663:"wopahu",
 66664:"wopatu",
 66665:"woroma",
-66666:"woromi",
+66666:"woromi"
 };
