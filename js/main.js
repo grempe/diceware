@@ -191,6 +191,9 @@ function getWordFromWordNum (wordNum) {
       case 'german':
         word = german[wordNum]
         break
+      case 'hungarian':
+        word = hungarian[wordNum]
+        break
       case 'japanese':
         word = japanese[wordNum]
         break
