@@ -1791,7 +1791,7 @@ var maori = {
 23252:"kapata",
 23253:"kapawa",
 23254:"kape",
-23255:"",
+23255:"kapea",
 23256:"kapeka",
 23261:"kapene",
 23262:"kapera",
@@ -4817,7 +4817,7 @@ var maori = {
 45254:"poronga",
 45255:"poronui",
 45256:"poropiti",
-45261:"poroporo:":"",
+45261:"poroporo",
 45262:"pororaru",
 45263:"porori",
 45264:"poroteke",
@@ -7774,5 +7774,4 @@ var maori = {
 66663:"wopahu",
 66664:"wopatu",
 66665:"woroma",
-66666:"woromi"
-};
+66666:"woromi"};
