@@ -1,6 +1,6 @@
 // Globals
 // which diceware language list will be used to lookup words.
-var currentList = 'eff'
+var currentList = 'maori'
 // an array of objects representing the current random word list.
 var wordList = []
 // the running tally of total entropy in the wordList
