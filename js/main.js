@@ -311,6 +311,9 @@ $(document).ready(function () {
   nameLink.parent().addClass('active')
   // clear and reset everything on initial load.
   resetUI()
+  
+  // Instantiate clipboard.js
+  var clipboardSpace = new Clipboard('.copy-button')
 
   // The nav links are used to select the current word list.
   $('.listSelectionLink').on('click', function (e) {
