@@ -221,6 +221,12 @@ function getWordFromWordNum (wordNum) {
       case 'spanish':
         word = spanish[wordNum]
         break
+      case 'portuguese':
+        word = portuguese[wordNum]
+        break
+      case 'portuguesebr':
+        word = portuguesebr[wordNum]
+        break
       default:
         word = eff[wordNum]
         break
