@@ -7,7 +7,7 @@
   "author": "Glenn Rempe <glenn@rempe.us>",
   "license": "MIT",
   "dependencies": {
-    "big.js": "^6.0.2",
+    "big.js": "^6.1.0",
     "bootstrap": "3.3.6",
     "bootstrap-validator": "^0.11.9",
     "clipboard": "^2.0.6",
