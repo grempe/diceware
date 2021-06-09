@@ -42,19 +42,20 @@ the [source code](https://github.com/grempe/diceware) for this app and run it
 locally. Due to the security methods in use such as Subresource Integrity, you'll
 need to serve the application from a small local web server and not from a `file:///` URL.
 
-Example:
+## Running offline
+Start a tiny Python web server many operating systems come with Python pre-installed.
 
+### Python2
 ```
 cd diceware
-
-# start a tiny Python web server
-# many operating systems come with
-# Python pre-installed.
 python -m SimpleHTTPServer 8080
-
-# visit http://localhost:8080
 ```
-
+### Python3
+```
+cd diceware
+python3 -m http.server 8080
+```
+Now you can disconnect your device from your Wi-Fi connection or Ethernet cable and visit http://localhost:8080 on your browser!  
 Another good option is to install `caddy` from [https://caddyserver.com/](https://caddyserver.com/) and run that command in this directory.
 
 ### Tin Foil Hat Version
