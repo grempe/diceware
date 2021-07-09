@@ -11,6 +11,6 @@
     "bootstrap": "3.3.6",
     "bootstrap-validator": "^0.11.9",
     "clipboard": "^2.0.8",
-    "jquery": "^2.2.0"
+    "jquery": "^3.6.0"
   }
 }
