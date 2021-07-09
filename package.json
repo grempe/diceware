@@ -8,7 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "big.js": "^6.1.1",
-    "bootstrap": "3.3.6",
+    "bootstrap": "3.4.1",
     "bootstrap-validator": "^0.11.9",
     "clipboard": "^2.0.8",
     "jquery": "^2.2.0"
