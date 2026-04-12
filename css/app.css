@@ -1,21 +1,337 @@
-body {
-  padding-top: 90px;
+/* Diceware custom styles — supplements Pico CSS classless */
+
+/* Prevent layout shift between pages with/without scrollbar */
+html {
+  scrollbar-gutter: stable;
 }
 
-#diceWords li {
-  font-family:
-    "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter",
-    monospace;
-  font-size: 30px;
+/* Constrain all Pico containers to the same width */
+:root {
+  --pico-container-max-width: 800px;
 }
 
-#diceWords li span {
-  font-family:
-    "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter",
-    monospace;
-  font-size: 10px;
+body > header,
+body > main,
+body > footer {
+  max-width: var(--pico-container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-.listSelectionLink {
-  font-size: 11px;
+/* List metadata */
+.list-metadata {
+  font-size: 0.75rem;
+  color: var(--pico-muted-color);
+  margin-top: -0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.list-metadata a {
+  color: var(--pico-muted-color);
+}
+
+.list-metadata a:hover {
+  color: var(--pico-primary);
+}
+
+/* Button group layout */
+#generateButtons {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+#generateButtons button {
+  width: auto;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Word count button colors — yellow (caution) to green (strong) */
+.gen-5 {
+  background: #e6a817;
+  border-color: #e6a817;
+  color: #fff;
+}
+.gen-6 {
+  background: #4caf50;
+  border-color: #4caf50;
+  color: #fff;
+}
+.gen-7 {
+  background: #3d9140;
+  border-color: #3d9140;
+  color: #fff;
+}
+.gen-8 {
+  background: #2e7d32;
+  border-color: #2e7d32;
+  color: #fff;
+}
+.gen-9 {
+  background: #1b5e20;
+  border-color: #1b5e20;
+  color: #fff;
+}
+
+.gen-5:hover {
+  background: #d49a15;
+  border-color: #d49a15;
+}
+.gen-6:hover {
+  background: #43a047;
+  border-color: #43a047;
+}
+.gen-7:hover {
+  background: #357a38;
+  border-color: #357a38;
+}
+.gen-8:hover {
+  background: #27692b;
+  border-color: #27692b;
+}
+.gen-9:hover {
+  background: #145218;
+  border-color: #145218;
+}
+
+.button-divider {
+  width: 1px;
+  height: 1.5rem;
+  background: var(--pico-muted-border-color);
+  margin: 0 0.3rem;
+}
+
+#generateButtons .outline {
+  background: transparent;
+  border-color: var(--pico-muted-border-color);
+  color: var(--pico-muted-color);
+}
+
+#generateButtons .outline:hover {
+  border-color: var(--pico-primary);
+  color: var(--pico-primary);
+  background: transparent;
+}
+
+/* Passphrase display */
+#passphraseDisplay {
+  margin: 1.5rem 0;
+}
+
+/* Word tokens with die rolls */
+#wordTokens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin: 2.5rem 0;
+}
+
+.word-token {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  font-family: "Courier New", Courier, monospace;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.word-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.word-token:hover .word-text,
+.word-token:hover .word-roll {
+  color: #c62828;
+}
+
+.word-roll {
+  font-size: 0.55rem;
+  color: var(--pico-muted-color);
+  opacity: 0.6;
+}
+
+/* Format selector */
+#formatSelector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+.format-link {
+  font-size: 0.7rem;
+  color: var(--pico-muted-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.format-link:hover {
+  color: var(--pico-primary);
+}
+
+.format-link.active {
+  color: var(--pico-primary);
+  text-decoration: underline;
+}
+
+/* Output card — lifted surface */
+#outputCard {
+  background: var(--pico-card-background-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#passphraseOutput {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#passphraseOutput code {
+  flex: 1;
+  font-size: 0.7rem;
+  word-break: break-all;
+  padding: 0.4rem 0;
+}
+
+#passphraseOutput .copy-button {
+  flex-shrink: 0;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+/* Stats cards */
+#statsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stats-card {
+  background: var(--pico-card-background-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.stats-card h3 small {
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.info-link {
+  font-size: 0.65rem;
+  text-decoration: none;
+  opacity: 0.5;
+}
+
+#entropyBreakdown {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.crack-table {
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.crack-table th,
+.crack-table td {
+  padding: 0.3rem 0.5rem;
+}
+
+@media (max-width: 600px) {
+  #statsContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Die roll input form — inline within button bar */
+#addFiveDieRollWordForm {
+  display: flex;
+  gap: 0.3rem;
+  margin: 0;
+}
+
+#addFiveDieRollWordForm input {
+  width: 5.5rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+  margin: 0;
+  height: auto;
+}
+
+/* Nav bar */
+nav {
+  align-items: center;
+}
+
+nav ul:last-child {
+  align-items: center;
+  gap: 0.75rem;
+}
+
+nav label {
+  display: none;
+}
+
+/* Shared header elements — use .nav-brand, .nav-item, .nav-select
+   across all pages for consistent sizing */
+.nav-brand {
+  font-size: 1.3rem !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: var(--pico-color) !important;
+}
+
+.nav-item {
+  font-size: 0.875rem !important;
+  text-decoration: none;
+}
+
+.nav-select {
+  margin-bottom: 0;
+  min-width: 190px;
+  font-size: 0.875rem;
+  padding: 0.35rem 0.5rem;
+  height: auto;
+}
+
+/* FAQ page */
+main > section {
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+main > section:last-child {
+  border-bottom: none;
+}
+
+main > section h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }

@@ -12,12 +12,15 @@ dice.
 
 ## Features
 
-- All random number generation is done in your browser using
-  [`window.crypto.getRandomValues()`](https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues)
-- Single page JavaScript application with no communication back to a server
-- Can be run locally from a Git clone, with all dependencies baked in
+- Zero runtime dependencies — all vanilla JavaScript ES modules
+- All random number generation uses the browser's
+  [`crypto.getRandomValues()`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues)
+- Single page application with no communication back to a server
+- Can be run locally from a Git clone — no install or build step required
 - Can be run without a network connection — no logging or analytics
+- Automatic dark/light mode support
 - Realtime estimate of the security level of your generated passphrase
+- Crack time estimates for consumer, professional, and nation-state attackers
 - Support for many language-specific word lists
 
 It may just be the closest thing to rolling your own dice. You can do that too
@@ -36,8 +39,8 @@ each word.
 
 If you are security conscious you are encouraged to download the
 [source code](https://github.com/grempe/diceware) for this app and run it
-locally. You'll need to serve the application from a small local web server
-and not from a `file:///` URL.
+locally. You'll need to serve the application from a local HTTP server
+(ES modules require this — `file://` URLs won't work).
 
 A `Caddyfile` is included for use with [Caddy](https://caddyserver.com/).
 Install Caddy and run:
@@ -48,6 +51,12 @@ caddy run
 ```
 
 Then open <http://localhost:8080> in your browser.
+
+Alternatively, use any static file server:
+
+```sh
+python3 -m http.server 8080
+```
 
 ### Tin Foil Hat Version
 

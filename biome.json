@@ -13,7 +13,7 @@
       "**/*.css",
       "**/*.html",
       "!!**/node_modules",
-      "!!**/lists"
+      "!!**/pico.classless.min.css"
     ]
   },
   "formatter": {

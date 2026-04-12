@@ -2,7 +2,7 @@
   "name": "diceware",
   "version": "1.0.0",
   "description": "A Diceware passphrase generator",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -11,13 +11,6 @@
   "repository": "https://github.com/grempe/diceware.git",
   "author": "Glenn Rempe <glenn@rempe.us>",
   "license": "MIT",
-  "dependencies": {
-    "big.js": "^6.1.1",
-    "bootstrap": "3.3.6",
-    "bootstrap-validator": "^0.11.9",
-    "clipboard": "^2.0.8",
-    "jquery": "^2.2.0"
-  },
   "devDependencies": {
     "@biomejs/biome": "^2.4.11"
   }

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Frequently asked questions about the Diceware passphrase generator." />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <title>FAQ — Diceware Passphrase Generator</title>
+    <link rel="stylesheet" href="css/pico.classless.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="/" class="nav-brand">Diceware</a></li>
+        </ul>
+        <ul>
+          <li><a href="/" class="nav-item">Generator</a></li>
+          <li><a href="faq.html" class="nav-item" aria-current="page">FAQ</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Frequently Asked Questions</h1>
+
+      <section>
+        <h2>What changed?</h2>
+        <p>This app was originally built in 2016 with jQuery and Bootstrap. In 2026 it was fully modernized: all runtime dependencies were removed, the UI was rebuilt with semantic HTML and <a href="https://picocss.com" target="_blank" rel="noopener">Pico CSS</a>, and all JavaScript was rewritten as native ES modules. The core Diceware algorithm and word lists are unchanged.</p>
+        <p>New features include multiple passphrase formats (spaces, hyphens, PascalCase, etc.), click-to-remove word tokens, shuffle, automatic dark mode, and crack time estimates for multiple attacker tiers.</p>
+      </section>
+
+      <section>
+        <h2>How do I use it?</h2>
+        <p>Pick a number (5&ndash;9) to generate that many words. The numbered buttons generate a fresh passphrase each time. Use <strong>+1</strong> to append a word or <strong>+sym</strong> to append a special character. <strong>Shuffle</strong> randomly reorders your passphrase. Click any word token to remove it.</p>
+        <p>You can also roll physical dice and type a 5-digit result (word) or 2-digit result (symbol) using digits 1&ndash;6, then press Enter.</p>
+        <p>Choose a format (spaces, hyphens, PascalCase, etc.) and copy the result. Store it somewhere safe &mdash; close your browser when done.</p>
+      </section>
+
+      <section>
+        <h2>Is it safe?</h2>
+        <p>For most people, yes. The app uses your browser's built-in cryptographic random number generator to simulate dice rolls. No data leaves your browser.</p>
+        <p>If you face a nation-state level adversary, the <a href="http://world.std.com/~reinhold/dicewarefaq.html#electronic" target="_blank" rel="noopener">Diceware FAQ</a> recommends rolling physical dice and looking up words manually.</p>
+      </section>
+
+      <section>
+        <h2>How is randomness generated?</h2>
+        <p>All randomness comes from <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues" target="_blank" rel="noopener">crypto.getRandomValues()</a></code>, the cryptographically secure random number generator built into modern browsers. A rejection sampling algorithm ensures unbiased die roll simulation.</p>
+      </section>
+
+      <section>
+        <h2>Does this send data anywhere?</h2>
+        <p>No. Your passphrase, die rolls, and settings never leave your browser. The app works entirely offline after the initial page load.</p>
+      </section>
+
+      <section>
+        <h2>Where is the code served from?</h2>
+        <p>Everything is static HTML, JavaScript, and CSS &mdash; no server, no database. The code has zero runtime dependencies. The only external file is <a href="https://picocss.com" target="_blank" rel="noopener">Pico CSS</a>, vendored locally. All source is on <a href="https://github.com/grempe/diceware" target="_blank" rel="noopener">GitHub</a>.</p>
+      </section>
+
+      <section>
+        <h2>Safety tips</h2>
+        <ul>
+          <li><a href="http://world.std.com/~reinhold/diceware.html" target="_blank" rel="noopener">Understand Diceware</a> and its strengths and limitations.</li>
+          <li>Only generate passphrases on a machine you own and control.</li>
+          <li>Ensure no one can see your screen.</li>
+          <li>Always use HTTPS.</li>
+          <li>Close the browser when done.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Why is the EFF word list the default?</h2>
+        <p>The <a href="https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases" target="_blank" rel="noopener">EFF word list</a> was designed to produce memorable, hard-to-confuse passphrases. Other word lists in 20+ languages are available via the language selector.</p>
+      </section>
+
+      <section>
+        <h2>What is entropy?</h2>
+        <p>Entropy measures how hard a passphrase is to guess. It depends on the method used to select it, not the passphrase itself. More entropy = harder to crack. A coin toss has 1 bit of entropy; each Diceware word adds ~12.92 bits.</p>
+        <p><small>— Adapted from <a href="http://world.std.com/~reinhold/dicewarefaq.html#entropy" target="_blank" rel="noopener">Arnold G. Reinhold's Diceware FAQ</a></small></p>
+      </section>
+
+      <section>
+        <h2>How is entropy calculated?</h2>
+        <p>Each word contributes <code>log&#8322;(7776) &asymp; 12.92</code> bits (one of 7,776 possibilities from five dice). Each symbol contributes <code>log&#8322;(36) &asymp; 5.16</code> bits (one of 36 possibilities from two dice). The total entropy is the sum, and the app tracks words and symbols separately.</p>
+      </section>
+
+      <section>
+        <h2>Can I run this locally?</h2>
+        <p>Yes. Clone the <a href="https://github.com/grempe/diceware" target="_blank" rel="noopener">repository</a> and serve it with any local HTTP server. It works completely offline. No install or build step required.</p>
+      </section>
+
+      <section>
+        <h2>Would XKCD approve?</h2>
+        <p><a href="https://xkcd.com/936/" target="_blank" rel="noopener">Yes</a>.</p>
+      </section>
+
+      <section>
+        <h2>Credits</h2>
+        <ul>
+          <li><a href="http://world.std.com/~reinhold/" target="_blank" rel="noopener">Arnold G. Reinhold</a> &mdash; created Diceware</li>
+          <li><a href="http://www.iamben.co.uk/" target="_blank" rel="noopener">Ben Pritchard</a> &mdash; built the first version of this web app</li>
+          <li><a href="https://www.rempe.us/" target="_blank" rel="noopener">Glenn Rempe</a> &mdash; enhanced security, modernized the code and UI</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <hr />
+      <nav>
+        <ul>
+          <li><small>Copyright &copy; 2016&ndash;<span class="current-year"></span> <a href="https://www.rempe.us/" target="_blank" rel="noopener">Glenn Rempe</a></small></li>
+        </ul>
+        <ul>
+          <li><small><a href="https://github.com/grempe/diceware" target="_blank" rel="noopener">GitHub</a></small></li>
+        </ul>
+      </nav>
+    </footer>
+
+    <script type="module">
+      for (const el of document.querySelectorAll('.current-year')) {
+              el.textContent = new Date().getFullYear()
+            }
+    </script>
+  </body>
+</html>
