@@ -19,14 +19,9 @@ dice.
   [window.crypto.getRandomValues()](https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues)
 - Single page JavaScript application with no communication back to a server
 - Can be run locally from a Git clone, with all dependencies baked in
-- Git tags and commits are
-  [signed with my public code signing key](https://www.rempe.us/keys/)
 - Can be run without a network connection. No logging or analytics
 - All assets are served from `www.rempe.us`, an
   [A+ rated TLS website](https://www.ssllabs.com/ssltest/analyze.html?d=www.rempe.us&latest)
-- All CSS/JS have
-  [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
-  hashes
 - Realtime estimate of the security level of your generated passphrase
 - Support for many language specific word lists
 
@@ -46,30 +41,18 @@ each word.
 
 If you are security conscious you are of course encouraged to download the
 [source code](https://github.com/grempe/diceware) for this app and run it
-locally. Due to the security methods in use such as Subresource Integrity,
-you'll need to serve the application from a small local web server and not from
-a `file:///` URL.
+locally. You'll need to serve the application from a small local web server
+and not from a `file:///` URL.
 
-One of the simplest to install and use for this purpose is
-[serve](https://github.com/vercel/serve#readme).
-
-Example:
+A `Caddyfile` is included for use with [Caddy](https://caddyserver.com/).
+Install Caddy and run:
 
 ```sh
 cd diceware
-
-$ npx serve
-
-   ┌────────────────────────────────────────┐
-   │                                        │
-   │   Serving!                             │
-   │                                        │
-   │   Local:  http://localhost:5000        │
-   │                                        │
-   │   Copied local address to clipboard!   │
-   │                                        │
-   └────────────────────────────────────────┘
+caddy run
 ```
+
+Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
 ### Tin Foil Hat Version
 
@@ -78,19 +61,6 @@ a black hood with a printout of the Diceware word list. No computers needed!
 
 _Not really kidding_
 
-### Installation Security : Signed Git Commits
-
-Most, if not all, of the commits and tags in the repository for this code are
-signed with my PGP/GPG code signing key. I have uploaded my code signing public
-keys to GitHub and you can now verify those signatures with the GitHub UI. See
-[this list of commits](https://github.com/grempe/diceware/commits/master) and
-look for the `Verified` tag next to each commit. You can click on that tag for
-additional information.
-
-You can also clone the repository and verify the signatures locally using your
-own GnuPG installation. You can find my certificates and read about how to
-conduct this verification at
-[https://www.rempe.us/keys/](https://www.rempe.us/keys/).
 
 ### Contributing
 

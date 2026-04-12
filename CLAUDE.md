@@ -8,13 +8,13 @@ Diceware passphrase generator — a single-page static web app that generates cr
 
 ## Running Locally
 
-No build step. Serve the directory with any static file server:
+No build step. Serve the directory with Caddy:
 
 ```sh
-npx serve
+caddy run
 ```
 
-The app uses Subresource Integrity (SRI) hashes, so it must be served over HTTP (not opened via `file:///`).
+Then open http://localhost:8080.
 
 ## Architecture
 
@@ -24,13 +24,11 @@ This is a vanilla JavaScript app with no build system, no bundler, and no framew
 - **`index.js`** — All application logic: CSPRNG dice rolling (`secureRandom`), word lookup (`getWords`, `getWordFromWordNum`), entropy calculation (`calcEntropyForWordOrSymbol`, `calcCrackTime`), and jQuery DOM manipulation
 - **`lists/`** — Diceware word lists for ~20 languages. Each is a standalone JS file that defines a global variable (e.g., `var eff = {...}`). Most have a `-min.js` minified variant
 - **`css/app.css`** — Minimal custom styles on top of Bootstrap 3
-- **`sri-gen.rb`** — Ruby script to regenerate `sri-hashes.json` (SHA-384 SRI hashes for all JS/CSS files)
 
 ## Key Design Decisions
 
 - **No server communication** — everything runs client-side with no analytics or logging
 - **`node_modules/` is committed** — intentional, so the app can run offline with no install step
-- **SRI hashes** — all CSS/JS assets in `index.html` use `integrity` attributes. After modifying any JS or CSS file, regenerate hashes with `ruby sri-gen.rb` and update the corresponding `integrity` attributes in `index.html`
 - **Word list selection** — controlled by the `currentList` global and a `switch` statement in `getWordFromWordNum()`. The URL hash fragment reflects the active list
 
 ## Code Style
