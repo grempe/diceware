@@ -20,8 +20,6 @@ dice.
 - Single page JavaScript application with no communication back to a server
 - Can be run locally from a Git clone, with all dependencies baked in
 - Can be run without a network connection. No logging or analytics
-- All assets are served from `www.rempe.us`, an
-  [A+ rated TLS website](https://www.ssllabs.com/ssltest/analyze.html?d=www.rempe.us&latest)
 - Realtime estimate of the security level of your generated passphrase
 - Support for many language specific word lists
 
@@ -60,7 +58,6 @@ If you want to be _REALLY REALLY_ secure. Roll the dice with a flashlight under
 a black hood with a printout of the Diceware word list. No computers needed!
 
 _Not really kidding_
-
 
 ### Contributing
 
