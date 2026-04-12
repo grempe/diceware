@@ -3,12 +3,16 @@ body {
 }
 
 #diceWords li {
-  font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+  font-family:
+    "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter",
+    monospace;
   font-size: 30px;
 }
 
 #diceWords li span {
-  font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+  font-family:
+    "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter",
+    monospace;
   font-size: 10px;
 }
 

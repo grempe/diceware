@@ -33,5 +33,5 @@ This is a vanilla JavaScript app with no build system, no bundler, and no framew
 
 ## Code Style
 
-- JavaScript follows [Standard Style](https://github.com/feross/standard) (no semicolons, 2-space indent for most files, but `.editorconfig` specifies 4-space for `.js` files)
-- LF line endings, trailing whitespace trimmed, final newline inserted
+- Linting and formatting via [Biome](https://biomejs.dev/) — run `npm run lint` to check, `npm run lint:fix` to auto-fix
+- 2-space indent, single quotes, semicolons as needed

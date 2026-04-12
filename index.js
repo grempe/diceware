@@ -8,12 +8,12 @@ var totalEntropy = new Big(0)
 
 // Simple function to add commas to really large number strings
 //  http://www.mredkj.com/javascript/nfbasic.html
-function addCommas (nStr) {
+function addCommas(nStr) {
   var x, x1, x2
   nStr += ''
   x = nStr.split('.')
   x1 = x[0]
-  x2 = x.length > 1 ? '.' + x[1] : ''
+  x2 = x.length > 1 ? `.${x[1]}` : ''
   var rgx = /(\d+)(\d{3})/
   while (rgx.test(x1)) {
     x1 = x1.replace(rgx, '$1' + ',' + '$2')
@@ -32,20 +32,20 @@ function addCommas (nStr) {
 // when count is a nice binary number (2n). If this if statement is
 // removed then it might have to loop a few times. So it saves a
 // couple of micro seconds.
-function secureRandom (count) {
+function secureRandom(count) {
   var cryptoObj = window.crypto || window.msCrypto
   var rand = new Uint32Array(1)
-  var skip = 0x7fffffff - 0x7fffffff % count
+  var skip = 0x7fffffff - (0x7fffffff % count)
   var result
 
   if (((count - 1) & count) === 0) {
-	cryptoObj.getRandomValues(rand)
-	return rand[0] & (count - 1)
+    cryptoObj.getRandomValues(rand)
+    return rand[0] & (count - 1)
   }
 
   do {
-	cryptoObj.getRandomValues(rand)
-	result = rand[0] & 0x7fffffff
+    cryptoObj.getRandomValues(rand)
+    result = rand[0] & 0x7fffffff
   } while (result >= skip)
 
   return result % count
@@ -54,25 +54,23 @@ function secureRandom (count) {
 // Returns an array of objects of length numWords (default 1).
 // Each object in the array represents a word and its index
 // and is the result of numRollsPerWord die rolls (default 5).
-function getWords (numWords, numRollsPerWord) {
-  'use strict'
-
-  var i,
-      j,
-      words,
-      rollResults,
-      rollResultsJoined
+function getWords(numWords, numRollsPerWord) {
+  var i, j, words, rollResults, rollResultsJoined
 
   words = []
 
-  if (!numWords) { numWords = 1 }
-  if (!numRollsPerWord) { numRollsPerWord = 5 }
+  if (!numWords) {
+    numWords = 1
+  }
+  if (!numRollsPerWord) {
+    numRollsPerWord = 5
+  }
 
   for (i = 0; i < numWords; i += 1) {
     rollResults = []
 
     for (j = 0; j < numRollsPerWord; j += 1) {
-	  // roll a 6 sided die
+      // roll a 6 sided die
       rollResults.push(secureRandom(6) + 1)
     }
 
@@ -85,12 +83,10 @@ function getWords (numWords, numRollsPerWord) {
 
 // Polyfill : for Math.log2 which is part of ES6
 // See : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log2
-Math.log2 = Math.log2 || function (x) {
-  return Math.log(x) / Math.LN2
-}
+Math.log2 = Math.log2 || ((x) => Math.log(x) / Math.LN2)
 
 // See : http://world.std.com/~reinhold/dicewarefaq.html#calculatingentropy
-function calcEntropyForWordOrSymbol (isSymbol) {
+function calcEntropyForWordOrSymbol(isSymbol) {
   var entropy
 
   if (!isSymbol) {
@@ -104,7 +100,7 @@ function calcEntropyForWordOrSymbol (isSymbol) {
   return entropy
 }
 
-function calcCrackTime (numWords, guessesPerSec) {
+function calcCrackTime(numWords, guessesPerSec) {
   var keySpace,
     halfKeySpace,
     seconds,
@@ -127,7 +123,7 @@ function calcCrackTime (numWords, guessesPerSec) {
   // https://xkcd.com/936/
   // https://security.stackexchange.com/questions/62832/is-the-oft-cited-xkcd-scheme-no-longer-good-advice/62881#62881
   // https://hashcat.net/forum/thread-2580.html
-  keySpace = new Big(Math.pow(7776, numWords))
+  keySpace = new Big(7776 ** numWords)
 
   // Divide the keySpace in half. On average it is expected that an
   // exhaustive search of only half the keySpace will result in success.
@@ -152,14 +148,29 @@ function calcCrackTime (numWords, guessesPerSec) {
 
   // All values returned are of 'Big' type.
   // See : https://mikemcl.github.io/big.js/
-  return {numWords: numWords, guessesPerSec: guessesPerSec, keySpace: keySpace, halfKeySpace: halfKeySpace, seconds: seconds, hours: hours, minutes: minutes, days: days, years: years, avgHumanLifespanInYears: avgHumanLifespanInYears, humanLifetimes: humanLifetimes, millenia: millenia, ageOfUniverseInYears: ageOfUniverseInYears, universeLifetimes: universeLifetimes}
+  return {
+    numWords: numWords,
+    guessesPerSec: guessesPerSec,
+    keySpace: keySpace,
+    halfKeySpace: halfKeySpace,
+    seconds: seconds,
+    hours: hours,
+    minutes: minutes,
+    days: days,
+    years: years,
+    avgHumanLifespanInYears: avgHumanLifespanInYears,
+    humanLifetimes: humanLifetimes,
+    millenia: millenia,
+    ageOfUniverseInYears: ageOfUniverseInYears,
+    universeLifetimes: universeLifetimes,
+  }
 }
 
 // Lookup a word by its wordNum and return
 // an Array with a single word object suitable for displayWords.
-function getWordFromWordNum (wordNum) {
+function getWordFromWordNum(wordNum) {
+  var word
   if (wordNum.length === 5) {
-    var word
     switch (currentList) {
       case 'alternative':
         word = alternative[wordNum]
@@ -228,18 +239,28 @@ function getWordFromWordNum (wordNum) {
         word = eff[wordNum]
         break
     }
-    return [{'word': word, 'wordNum': wordNum, 'entropy': calcEntropyForWordOrSymbol(false)}]
+    return [
+      {
+        word: word,
+        wordNum: wordNum,
+        entropy: calcEntropyForWordOrSymbol(false),
+      },
+    ]
   } else if (wordNum.length === 2) {
-    return [{'word': special[wordNum], 'wordNum': wordNum, 'entropy': calcEntropyForWordOrSymbol(true)}]
+    return [
+      {
+        word: special[wordNum],
+        wordNum: wordNum,
+        entropy: calcEntropyForWordOrSymbol(true),
+      },
+    ]
   }
 }
 
 // Takes an array of word objects and display them on the page.
-function displayWords (words) {
-  'use strict'
-
+function displayWords(words) {
   // add the word to the global array of words
-  $.each(words, function (index, obj) {
+  $.each(words, (_index, obj) => {
     var objEntropy = new Big(obj.entropy)
     totalEntropy = totalEntropy.plus(objEntropy)
     $('#totalEntropy').text(totalEntropy.toFixed(2))
@@ -247,8 +268,14 @@ function displayWords (words) {
   })
 
   // add the word to the main display
-  $.each(words, function (index, obj) {
-    $('#diceWords').append('<li>' + obj.word + '<span class="text-muted">' + obj.wordNum + '</span></li>')
+  $.each(words, (_index, obj) => {
+    $('#diceWords').append(
+      '<li>' +
+        obj.word +
+        '<span class="text-muted">' +
+        obj.wordNum +
+        '</span></li>',
+    )
   })
 
   $('#diceWordsCopyableSpace').text(wordList.join(' '))
@@ -256,51 +283,71 @@ function displayWords (words) {
   $('#diceWordsCopyableContainer').slideDown()
 }
 
-function displayCrackTime (words) {
+function displayCrackTime(words) {
   $('#totalWords').text(words.length)
 
   // Display crack time results
   var crackTimeResults = calcCrackTime(words.length)
 
-  $('#crackTimeResultsGuessesPerSecond').text(addCommas(crackTimeResults.guessesPerSec.toFixed(0)))
-  $('#crackTimeResultsKeySpace').text(addCommas(crackTimeResults.keySpace.toFixed(0)))
+  $('#crackTimeResultsGuessesPerSecond').text(
+    addCommas(crackTimeResults.guessesPerSec.toFixed(0)),
+  )
+  $('#crackTimeResultsKeySpace').text(
+    addCommas(crackTimeResults.keySpace.toFixed(0)),
+  )
 
   $('#crackTimeResultsSeconds').text(
-    (crackTimeResults.seconds > 1) ? addCommas(crackTimeResults.seconds.toFixed(0)) : addCommas(crackTimeResults.seconds.toFixed(2))
+    crackTimeResults.seconds > 1
+      ? addCommas(crackTimeResults.seconds.toFixed(0))
+      : addCommas(crackTimeResults.seconds.toFixed(2)),
   )
 
   $('#crackTimeResultsMinutes').text(
-    (crackTimeResults.minutes > 1) ? addCommas(crackTimeResults.minutes.toFixed(0)) : addCommas(crackTimeResults.minutes.toFixed(2))
+    crackTimeResults.minutes > 1
+      ? addCommas(crackTimeResults.minutes.toFixed(0))
+      : addCommas(crackTimeResults.minutes.toFixed(2)),
   )
 
   $('#crackTimeResultsHours').text(
-    (crackTimeResults.hours > 1) ? addCommas(crackTimeResults.hours.toFixed(0)) : addCommas(crackTimeResults.hours.toFixed(2))
+    crackTimeResults.hours > 1
+      ? addCommas(crackTimeResults.hours.toFixed(0))
+      : addCommas(crackTimeResults.hours.toFixed(2)),
   )
 
   $('#crackTimeResultsDays').text(
-    (crackTimeResults.days > 1) ? addCommas(crackTimeResults.days.toFixed(0)) : addCommas(crackTimeResults.days.toFixed(2))
+    crackTimeResults.days > 1
+      ? addCommas(crackTimeResults.days.toFixed(0))
+      : addCommas(crackTimeResults.days.toFixed(2)),
   )
 
   $('#crackTimeResultsYears').text(
-    (crackTimeResults.years > 1) ? addCommas(crackTimeResults.years.toFixed(0)) : addCommas(crackTimeResults.years.toFixed(4))
+    crackTimeResults.years > 1
+      ? addCommas(crackTimeResults.years.toFixed(0))
+      : addCommas(crackTimeResults.years.toFixed(4)),
   )
 
   $('#crackTimeResultsHumanLifetimes').text(
-    (crackTimeResults.humanLifetimes > 1) ? addCommas(crackTimeResults.humanLifetimes.toFixed(0)) : addCommas(crackTimeResults.humanLifetimes.toFixed(6))
+    crackTimeResults.humanLifetimes > 1
+      ? addCommas(crackTimeResults.humanLifetimes.toFixed(0))
+      : addCommas(crackTimeResults.humanLifetimes.toFixed(6)),
   )
 
   $('#crackTimeResultsMillenia').text(
-    (crackTimeResults.millenia > 1) ? addCommas(crackTimeResults.millenia.toFixed(0)) : addCommas(crackTimeResults.millenia.toFixed(7))
+    crackTimeResults.millenia > 1
+      ? addCommas(crackTimeResults.millenia.toFixed(0))
+      : addCommas(crackTimeResults.millenia.toFixed(7)),
   )
 
   $('#crackTimeResultsUniverseLifetimes').text(
-    (crackTimeResults.universeLifetimes > 1) ? addCommas(crackTimeResults.universeLifetimes.toFixed(0)) : addCommas(crackTimeResults.universeLifetimes.toFixed())
+    crackTimeResults.universeLifetimes > 1
+      ? addCommas(crackTimeResults.universeLifetimes.toFixed(0))
+      : addCommas(crackTimeResults.universeLifetimes.toFixed()),
   )
 
   $('#entropyEstimateContainer').slideDown()
 }
 
-function resetUI () {
+function resetUI() {
   wordList = []
   totalEntropy = new Big(0)
   $('#entropyEstimateContainer').hide()
@@ -311,20 +358,18 @@ function resetUI () {
   window.location.hash = currentList
 }
 
-$(document).ready(function () {
-  'use strict'
-
+$(document).ready(() => {
   // Instantiate clipboard.js
-  var clipboardSpace = new ClipboardJS('.copy-button')
+  var _clipboardSpace = new ClipboardJS('.copy-button')
 
   // Load any wordlist specified in the URL's hash.
   var listName = window.location.hash.substr(1)
-  var nameLink = $("a.listSelectionLink[data-list='" + listName + "']")
-  if (nameLink.length == 1) {
-      currentList = listName
+  var nameLink = $(`a.listSelectionLink[data-list='${listName}']`)
+  if (nameLink.length === 1) {
+    currentList = listName
   } else {
-      console.log("Wordlist not found: '", listName, "'")
-      nameLink = $("a.listSelectionLink[data-list='" + currentList + "']")
+    console.log("Wordlist not found: '", listName, "'")
+    nameLink = $(`a.listSelectionLink[data-list='${currentList}']`)
   }
   nameLink.parent().addClass('active')
   // clear and reset everything on initial load.
@@ -360,11 +405,15 @@ $(document).ready(function () {
   // can be either a five die roll for a full word, or a two die
   // roll for a symbol.
   // does not reset UI. Adds onto existing wordList
-  $('#addFiveDieRollWordForm').on('submit', function (e) {
+  $('#addFiveDieRollWordForm').on('submit', (e) => {
     var addFiveDieRollWord
     e.preventDefault()
     addFiveDieRollWord = $('#addFiveDieRollWord').val()
-    if ((addFiveDieRollWord.match(/^[1-6]{2}$/) || addFiveDieRollWord.match(/^[1-6]{5}$/)) && (addFiveDieRollWord.length === 2 || addFiveDieRollWord.length === 5)) {
+    if (
+      (addFiveDieRollWord.match(/^[1-6]{2}$/) ||
+        addFiveDieRollWord.match(/^[1-6]{5}$/)) &&
+      (addFiveDieRollWord.length === 2 || addFiveDieRollWord.length === 5)
+    ) {
       displayWords(getWordFromWordNum(addFiveDieRollWord))
     }
     $('#addFiveDieRollWord').val('')
