@@ -34,10 +34,10 @@ All tasks are defined in `Taskfile.yml`. Run `task` to list them.
 - `task lint` — check linting and formatting
 - `task lint-fix` — auto-fix lint and format issues
 - `task format` — format all files
-- `task verify` — validate all word list files (Tier 1+2 checks)
-- `task verify -- lists/eff.js` — validate a specific list file
-- `task verify-all` — run all checks including expensive Tier 3 metrics
-- `task precommit` — run all precommit checks (lint + verify)
+- `task verify` — run all verification tiers, update list metadata and generate reports
+- `task verify -- lists/eff.js` — verify a specific list file (with writes)
+- `task verify-check` — quick read-only verification (tiers 1+2, no writes)
+- `task precommit` — run all precommit checks (lint + full verification)
 - `task install` — install npm dependencies (runs automatically as a dependency of lint tasks)
 
 ## Architecture

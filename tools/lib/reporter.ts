@@ -1,7 +1,6 @@
-import type { CheckResult, Severity } from '../checks/types.ts'
+import type { CheckResult, ListData, Severity } from '../checks/types.ts'
 
 export function computeGrade(checks: CheckResult[]): string {
-  // Any structural (Tier 1) failure is an automatic F
   const hasStructuralFailure = checks.some(
     (ch) => ch.severity === 'FAIL' && !ch.passed,
   )
@@ -33,6 +32,12 @@ interface ListReport {
   checks: CheckResult[]
 }
 
+const TIER_GROUPS: Array<{ label: string; severities: Severity[] }> = [
+  { label: 'STRUCTURAL', severities: ['FAIL'] },
+  { label: 'QUALITY', severities: ['WARN'] },
+  { label: 'ANALYSIS', severities: ['INFO'] },
+]
+
 const COLORS = {
   reset: '\x1b[0m',
   bold: '\x1b[1m',
@@ -48,27 +53,11 @@ function c(color: keyof typeof COLORS, text: string, noColor: boolean): string {
   return `${COLORS[color]}${text}${COLORS.reset}`
 }
 
-function severityColor(severity: Severity): keyof typeof COLORS {
-  switch (severity) {
-    case 'FAIL':
-      return 'red'
-    case 'WARN':
-      return 'yellow'
-    case 'INFO':
-      return 'cyan'
-  }
-}
-
-function severityLabel(
-  severity: Severity,
-  passed: boolean,
-  noColor: boolean,
-): string {
-  if (passed && severity !== 'INFO') {
-    return c('green', 'PASS', noColor)
-  }
-  const color = severityColor(severity)
-  return c(color, severity, noColor)
+function gradeColor(grade: string): keyof typeof COLORS {
+  if (grade === 'A') return 'green'
+  if (grade === 'B') return 'cyan'
+  if (grade === 'F') return 'red'
+  return 'yellow'
 }
 
 export class Reporter {
@@ -96,32 +85,41 @@ export class Reporter {
 
   private printListReport(report: ListReport): void {
     const nc = this.opts.noColor
+    const totalPassed = report.checks.filter((ch) => ch.passed).length
+    const totalChecks = report.checks.length
+    const grade = computeGrade(report.checks)
+
     console.log(
-      `\n${c('bold', `=== ${report.file}`, nc)} (${report.listName}) ===\n`,
+      `\n${c('bold', `=== ${report.file}`, nc)} (${report.listName}) — Grade: ${c(gradeColor(grade), grade, nc)} (${totalPassed}/${totalChecks} passed) ===\n`,
     )
 
-    for (const check of report.checks) {
-      const show =
-        !check.passed || this.opts.verbose || check.severity === 'INFO'
-      if (!show && check.passed) {
-        // In non-verbose mode, still show PASS lines but skip details
-        const label = severityLabel(check.severity, check.passed, nc)
-        console.log(`  ${label}  ${check.name}: ${check.message}`)
-        continue
-      }
+    for (const group of TIER_GROUPS) {
+      const checks = report.checks.filter((ch) =>
+        group.severities.includes(ch.severity),
+      )
+      if (checks.length === 0) continue
 
-      const label = severityLabel(check.severity, check.passed, nc)
-      console.log(`  ${label}  ${check.name}: ${check.message}`)
+      const groupPassed = checks.filter((ch) => ch.passed).length
+      console.log(
+        `  ${c('bold', `${group.label}`, nc)} (${groupPassed}/${checks.length})`,
+      )
 
-      if (
-        check.details &&
-        check.details.length > 0 &&
-        (!check.passed || this.opts.verbose || check.severity === 'INFO')
-      ) {
-        for (const detail of check.details) {
-          console.log(`${c('dim', `            ${detail}`, nc)}`)
+      for (const check of checks) {
+        const passed = check.passed
+        const label = passed ? c('green', 'PASS', nc) : c('red', 'FAIL', nc)
+        console.log(`    ${label}  ${check.name}: ${check.message}`)
+
+        if (
+          check.details &&
+          check.details.length > 0 &&
+          (!passed || this.opts.verbose)
+        ) {
+          for (const detail of check.details) {
+            console.log(`${c('dim', `              ${detail}`, nc)}`)
+          }
         }
       }
+      console.log('')
     }
   }
 
@@ -133,52 +131,52 @@ export class Reporter {
 
     const nc = this.opts.noColor
     const total = this.reports.length
-    let passed = 0
-    let warned = 0
-    let failed = 0
 
-    for (const report of this.reports) {
-      const hasFail = report.checks.some(
-        (ch) => ch.severity === 'FAIL' && !ch.passed,
-      )
-      const hasWarn = report.checks.some(
-        (ch) => ch.severity === 'WARN' && !ch.passed,
-      )
-      if (hasFail) failed++
-      else if (hasWarn) warned++
-      else passed++
-    }
-
-    console.log(`\n${'─'.repeat(40)}`)
+    console.log(`${'─'.repeat(40)}`)
     console.log(
       `${c('bold', `SUMMARY: ${total} list${total !== 1 ? 's' : ''} checked`, nc)}`,
     )
-    console.log(
-      `  ${c('green', `PASS: ${passed}`, nc)}    ${c('yellow', `WARN: ${warned}`, nc)}    ${c('red', `FAIL: ${failed}`, nc)}`,
-    )
+
+    const gradeOrder = { A: 0, B: 1, C: 2, D: 3, F: 4 }
+    const sorted = this.reports
+      .map((report) => ({
+        report,
+        grade: computeGrade(report.checks),
+        passed: report.checks.filter((ch) => ch.passed).length,
+        total: report.checks.length,
+      }))
+      .sort((a, b) => {
+        const g =
+          (gradeOrder[a.grade as keyof typeof gradeOrder] ?? 5) -
+          (gradeOrder[b.grade as keyof typeof gradeOrder] ?? 5)
+        if (g !== 0) return g
+        return a.report.listName.localeCompare(b.report.listName)
+      })
+
+    for (const { report, grade, passed, total } of sorted) {
+      console.log(
+        `  ${c(gradeColor(grade), grade, nc)}  ${report.listName} (${passed}/${total})`,
+      )
+    }
   }
 
   private printJsonOutput(): void {
     const output = {
-      results: this.reports,
+      results: this.reports.map((report) => ({
+        ...report,
+        grade: computeGrade(report.checks),
+        passed: report.checks.filter((ch) => ch.passed).length,
+        total: report.checks.length,
+      })),
       summary: {
         totalLists: this.reports.length,
-        passed: 0,
-        warned: 0,
-        failed: 0,
+        grades: {} as Record<string, number>,
       },
     }
 
     for (const report of this.reports) {
-      const hasFail = report.checks.some(
-        (ch) => ch.severity === 'FAIL' && !ch.passed,
-      )
-      const hasWarn = report.checks.some(
-        (ch) => ch.severity === 'WARN' && !ch.passed,
-      )
-      if (hasFail) output.summary.failed++
-      else if (hasWarn) output.summary.warned++
-      else output.summary.passed++
+      const grade = computeGrade(report.checks)
+      output.summary.grades[grade] = (output.summary.grades[grade] ?? 0) + 1
     }
 
     console.log(JSON.stringify(output, null, 2))
@@ -207,16 +205,7 @@ export class Reporter {
     lines.push(`Grade: ${grade} (${totalPassed}/${totalChecks} passed)`)
     lines.push('')
 
-    const tierGroups: Array<{
-      label: string
-      severities: Severity[]
-    }> = [
-      { label: 'STRUCTURAL', severities: ['FAIL'] },
-      { label: 'QUALITY', severities: ['WARN'] },
-      { label: 'ANALYSIS', severities: ['INFO'] },
-    ]
-
-    for (const group of tierGroups) {
+    for (const group of TIER_GROUPS) {
       const checks = report.checks.filter((ch) =>
         group.severities.includes(ch.severity),
       )

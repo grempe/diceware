@@ -156,13 +156,13 @@
 
     <script>
       if (location.protocol === 'file:') {
-                    document.body.innerHTML = '<main><h1>Local server required</h1>' +
-                      '<p>This app uses ES modules, which browsers block on <code>file://</code> URLs. ' +
-                      'Serve it with a local HTTP server instead:</p>' +
-                      '<pre><code>cd diceware\ncaddy run</code></pre>' +
-                      '<p>Or: <code>python3 -m http.server 8080</code></p>' +
-                      '<p>Then open <a href="http://localhost:8080">http://localhost:8080</a></p></main>'
-                  }
+                          document.body.innerHTML = '<main><h1>Local server required</h1>' +
+                            '<p>This app uses ES modules, which browsers block on <code>file://</code> URLs. ' +
+                            'Serve it with a local HTTP server instead:</p>' +
+                            '<pre><code>cd diceware\ncaddy run</code></pre>' +
+                            '<p>Or: <code>python3 -m http.server 8080</code></p>' +
+                            '<p>Then open <a href="http://localhost:8080">http://localhost:8080</a></p></main>'
+                        }
     </script>
     <script type="module" src="js/main.js"></script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "27571f97ddcb414b94714fd30d6f3d63"}'></script><!-- End Cloudflare Web Analytics -->
