@@ -328,7 +328,7 @@ function checkNonWordEntries(data: ListData): CheckResult {
 
     if (word.length === 1) {
       singleChar.push(entry)
-    } else if (word.length === 2 && /^[a-zA-Z]{2}$/.test(word)) {
+    } else if (word.length === 2 && /^\p{L}{2}$/u.test(word)) {
       twoChar.push(entry)
     }
 
@@ -450,6 +450,109 @@ function checkLongWords(data: ListData): CheckResult {
   }
 }
 
+function checkEditDistanceOne(data: ListData): CheckResult {
+  if (data.isSpecial) {
+    return {
+      id: 'edit-distance-1',
+      name: 'Edit distance-1 pairs',
+      severity: 'INFO',
+      passed: true,
+      message: 'skipped (special list)',
+    }
+  }
+
+  // Neighborhood generation approach: for each word, generate all
+  // 1-edit-distance neighbors and check set membership. O(n*L*A).
+  const wordSet = new Set(Object.values(data.wordMap))
+  const charset = new Set<string>()
+  for (const word of wordSet) {
+    for (const ch of word) {
+      charset.add(ch)
+    }
+  }
+  const chars = [...charset]
+
+  const pairs: string[] = []
+  const seen = new Set<string>()
+
+  for (const word of wordSet) {
+    // Deletions
+    for (let i = 0; i < word.length; i++) {
+      const neighbor = word.slice(0, i) + word.slice(i + 1)
+      if (wordSet.has(neighbor) && !seen.has(`${neighbor}|${word}`)) {
+        pairs.push(`"${word}" <-> "${neighbor}"`)
+        seen.add(`${word}|${neighbor}`)
+      }
+    }
+
+    // Substitutions
+    for (let i = 0; i < word.length; i++) {
+      for (const ch of chars) {
+        if (ch === word[i]) continue
+        const neighbor = word.slice(0, i) + ch + word.slice(i + 1)
+        if (wordSet.has(neighbor) && !seen.has(`${neighbor}|${word}`)) {
+          pairs.push(`"${word}" <-> "${neighbor}"`)
+          seen.add(`${word}|${neighbor}`)
+        }
+      }
+    }
+
+    // Stop early if we have many pairs — no need to enumerate them all
+    if (pairs.length > 200) break
+  }
+
+  return {
+    id: 'edit-distance-1',
+    name: 'Edit distance-1 pairs',
+    severity: 'INFO',
+    passed: pairs.length === 0,
+    message:
+      pairs.length === 0
+        ? 'no distance-1 pairs found'
+        : `${pairs.length}${pairs.length > 200 ? '+' : ''} distance-1 pair${pairs.length !== 1 ? 's' : ''} found`,
+    details:
+      pairs.length > 0
+        ? [
+            ...pairs.slice(0, 10),
+            ...(pairs.length > 10 ? [`... (${pairs.length - 10} more)`] : []),
+          ]
+        : undefined,
+  }
+}
+
+function checkWordSortedOrder(data: ListData): CheckResult {
+  const entries = Object.entries(data.wordMap)
+  const outOfOrder: string[] = []
+
+  for (let i = 0; i < entries.length - 1; i++) {
+    const [keyA, wordA] = entries[i]
+    const [keyB, wordB] = entries[i + 1]
+    if (wordA.localeCompare(wordB) > 0) {
+      outOfOrder.push(`"${wordA}" (${keyA}) > "${wordB}" (${keyB})`)
+    }
+  }
+
+  return {
+    id: 'word-sorted-order',
+    name: 'Word sorted order',
+    severity: 'INFO',
+    passed: outOfOrder.length === 0,
+    message:
+      outOfOrder.length === 0
+        ? 'words are in alphabetical order by key'
+        : `${outOfOrder.length} out-of-order word${outOfOrder.length !== 1 ? 's' : ''}`,
+    details:
+      outOfOrder.length > 0
+        ? [
+            ...outOfOrder.slice(0, 5),
+            ...(outOfOrder.length > 5
+              ? [`... (${outOfOrder.length - 5} more)`]
+              : []),
+          ]
+        : undefined,
+  }
+}
+
 function checkSmartQuotes(data: ListData): CheckResult {
   const smartQuoteRe = /[\u2018\u2019\u201c\u201d]/
   const problems: string[] = []
@@ -518,6 +621,8 @@ export function runInfoChecks(data: ListData): CheckResult[] {
     checkLongestSharedPrefix(data),
     checkUniquePrefixLength(data),
     checkEntropyAndEfficiency(data),
+    checkEditDistanceOne(data),
+    checkWordSortedOrder(data),
     checkNonWordEntries(data),
     checkLongWords(data),
     checkSmartQuotes(data),

@@ -1,42 +1,5 @@
 import type { CheckResult, ListData } from './types.ts'
 
-function checkCaseInsensitiveDuplicates(data: ListData): CheckResult {
-  const normalized = new Map<string, string[]>()
-  for (const [key, word] of Object.entries(data.wordMap)) {
-    const lower = word.toLowerCase()
-    const existing = normalized.get(lower)
-    if (existing) {
-      existing.push(`${key}:"${word}"`)
-    } else {
-      normalized.set(lower, [`${key}:"${word}"`])
-    }
-  }
-
-  const dupes: [string, string[]][] = []
-  for (const [lower, entries] of normalized) {
-    if (entries.length > 1) {
-      dupes.push([lower, entries])
-    }
-  }
-
-  return {
-    id: 'case-insensitive-dupes',
-    name: 'Case-insensitive duplicates',
-    severity: 'WARN',
-    passed: dupes.length === 0,
-    message:
-      dupes.length === 0
-        ? 'none found'
-        : `${dupes.length} group${dupes.length !== 1 ? 's' : ''} of case-insensitive duplicates`,
-    details:
-      dupes.length > 0
-        ? dupes
-            .slice(0, 10)
-            .map(([lower, entries]) => `"${lower}": ${entries.join(', ')}`)
-        : undefined,
-  }
-}
-
 function checkUnicodeNormalizationDuplicates(data: ListData): CheckResult {
   const forms: Array<'NFC' | 'NFKD'> = ['NFC', 'NFKD']
   const allDupes: string[] = []
@@ -114,125 +77,6 @@ function checkPrefixFree(data: ListData): CheckResult {
   }
 }
 
-function checkEditDistanceOne(data: ListData): CheckResult {
-  if (data.isSpecial) {
-    return {
-      id: 'edit-distance-1',
-      name: 'Edit distance-1 pairs',
-      severity: 'WARN',
-      passed: true,
-      message: 'skipped (special list)',
-    }
-  }
-
-  // Neighborhood generation approach: for each word, generate all
-  // 1-edit-distance neighbors and check set membership. O(n*L*A).
-  const wordSet = new Set(Object.values(data.wordMap))
-  const charset = new Set<string>()
-  for (const word of wordSet) {
-    for (const ch of word) {
-      charset.add(ch)
-    }
-  }
-  const chars = [...charset]
-
-  const pairs: string[] = []
-  const seen = new Set<string>()
-
-  for (const word of wordSet) {
-    // Deletions
-    for (let i = 0; i < word.length; i++) {
-      const neighbor = word.slice(0, i) + word.slice(i + 1)
-      if (wordSet.has(neighbor) && !seen.has(`${neighbor}|${word}`)) {
-        pairs.push(`"${word}" <-> "${neighbor}"`)
-        seen.add(`${word}|${neighbor}`)
-      }
-    }
-
-    // Substitutions
-    for (let i = 0; i < word.length; i++) {
-      for (const ch of chars) {
-        if (ch === word[i]) continue
-        const neighbor = word.slice(0, i) + ch + word.slice(i + 1)
-        if (wordSet.has(neighbor) && !seen.has(`${neighbor}|${word}`)) {
-          pairs.push(`"${word}" <-> "${neighbor}"`)
-          seen.add(`${word}|${neighbor}`)
-        }
-      }
-    }
-
-    // Stop early if we have many pairs — no need to enumerate them all
-    if (pairs.length > 200) break
-  }
-
-  return {
-    id: 'edit-distance-1',
-    name: 'Edit distance-1 pairs',
-    severity: 'WARN',
-    passed: pairs.length === 0,
-    message:
-      pairs.length === 0
-        ? 'no distance-1 pairs found'
-        : `${pairs.length}${pairs.length > 200 ? '+' : ''} distance-1 pair${pairs.length !== 1 ? 's' : ''} found`,
-    details:
-      pairs.length > 0
-        ? [
-            ...pairs.slice(0, 10),
-            ...(pairs.length > 10 ? [`... (${pairs.length - 10} more)`] : []),
-          ]
-        : undefined,
-  }
-}
-
-function checkWhitespace(data: ListData): CheckResult {
-  const leading: string[] = []
-  const trailing: string[] = []
-  const tabs: string[] = []
-  const internal: string[] = []
-
-  for (const [key, word] of Object.entries(data.wordMap)) {
-    if (word !== word.trimStart()) leading.push(`${key}:"${word}"`)
-    if (word !== word.trimEnd()) trailing.push(`${key}:"${word}"`)
-    if (word.includes('\t')) tabs.push(`${key}:"${word}"`)
-    // Internal whitespace (spaces within the word, excluding leading/trailing)
-    const trimmed = word.trim()
-    if (/\s/.test(trimmed) && trimmed.includes(' ')) {
-      internal.push(`${key}:"${word}"`)
-    }
-  }
-
-  const problems = leading.length + trailing.length + tabs.length
-  const details: string[] = []
-  if (leading.length > 0)
-    details.push(
-      `leading whitespace: ${leading.slice(0, 3).join(', ')}${leading.length > 3 ? ` ... (${leading.length} total)` : ''}`,
-    )
-  if (trailing.length > 0)
-    details.push(
-      `trailing whitespace: ${trailing.slice(0, 3).join(', ')}${trailing.length > 3 ? ` ... (${trailing.length} total)` : ''}`,
-    )
-  if (tabs.length > 0)
-    details.push(
-      `tab characters: ${tabs.slice(0, 3).join(', ')}${tabs.length > 3 ? ` ... (${tabs.length} total)` : ''}`,
-    )
-  if (internal.length > 0)
-    details.push(
-      `internal spaces (info): ${internal.slice(0, 3).join(', ')}${internal.length > 3 ? ` ... (${internal.length} total)` : ''}`,
-    )
-
-  return {
-    id: 'whitespace',
-    name: 'Whitespace',
-    severity: 'WARN',
-    passed: problems === 0,
-    message:
-      problems === 0
-        ? 'clean'
-        : `${problems} whitespace issue${problems !== 1 ? 's' : ''} found`,
-    details: details.length > 0 ? details : undefined,
-  }
-}
-
 function checkWordLengthStats(data: ListData): CheckResult {
   const words = Object.values(data.wordMap)
   const lengths = words.map((w) => w.length).sort((a, b) => a - b)
@@ -274,6 +118,47 @@ function checkWordLengthStats(data: ListData): CheckResult {
   }
 }
 
+const MIN_WORD_LENGTH = 3
+
+function checkMinWordLength(data: ListData): CheckResult {
+  if (data.isSpecial) {
+    return {
+      id: 'min-word-length',
+      name: 'Minimum word length',
+      severity: 'WARN',
+      passed: true,
+      message: 'skipped (special list)',
+    }
+  }
+
+  const short: string[] = []
+  for (const [key, word] of Object.entries(data.wordMap)) {
+    if (word.length < MIN_WORD_LENGTH) {
+      short.push(
+        `${key}:"${word}" (${word.length} char${word.length !== 1 ? 's' : ''})`,
+      )
+    }
+  }
+
+  return {
+    id: 'min-word-length',
+    name: 'Minimum word length',
+    severity: 'WARN',
+    passed: short.length === 0,
+    message:
+      short.length === 0
+        ? `all words are ${MIN_WORD_LENGTH}+ characters`
+        : `${short.length} word${short.length !== 1 ? 's' : ''} shorter than ${MIN_WORD_LENGTH} characters`,
+    details:
+      short.length > 0
+        ? [
+            ...short.slice(0, 10),
+            ...(short.length > 10 ? [`... (${short.length - 10} more)`] : []),
+          ]
+        : undefined,
+  }
+}
+
 function checkKeySortedOrder(data: ListData): CheckResult {
   const keys = Object.keys(data.wordMap)
   const outOfOrder: string[] = []
@@ -295,39 +180,6 @@ function checkKeySortedOrder(data: ListData): CheckResult {
       outOfOrder.length === 0
         ? 'die roll keys are in ascending order'
         : `${outOfOrder.length} out-of-order key${outOfOrder.length !== 1 ? 's' : ''}`,
-    details:
-      outOfOrder.length > 0
-        ? [
-            ...outOfOrder.slice(0, 5),
-            ...(outOfOrder.length > 5
-              ? [`... (${outOfOrder.length - 5} more)`]
-              : []),
-          ]
-        : undefined,
-  }
-}
-
-function checkWordSortedOrder(data: ListData): CheckResult {
-  const entries = Object.entries(data.wordMap)
-  const outOfOrder: string[] = []
-
-  for (let i = 0; i < entries.length - 1; i++) {
-    const [keyA, wordA] = entries[i]
-    const [keyB, wordB] = entries[i + 1]
-    if (wordA.localeCompare(wordB) > 0) {
-      outOfOrder.push(`"${wordA}" (${keyA}) > "${wordB}" (${keyB})`)
-    }
-  }
-
-  return {
-    id: 'word-sorted-order',
-    name: 'Word sorted order',
-    severity: 'WARN',
-    passed: outOfOrder.length === 0,
-    message:
-      outOfOrder.length === 0
-        ? 'words are in alphabetical order by key'
-        : `${outOfOrder.length} out-of-order word${outOfOrder.length !== 1 ? 's' : ''}`,
     details:
       outOfOrder.length > 0
         ? [
@@ -449,14 +301,11 @@ function checkMetadata(data: ListData): CheckResult[] {
 
 export function runWarningChecks(data: ListData): CheckResult[] {
   return [
-    checkCaseInsensitiveDuplicates(data),
     checkUnicodeNormalizationDuplicates(data),
     checkPrefixFree(data),
-    checkEditDistanceOne(data),
-    checkWhitespace(data),
     checkWordLengthStats(data),
+    checkMinWordLength(data),
     checkKeySortedOrder(data),
-    checkWordSortedOrder(data),
     checkCharacterSet(data),
     ...checkMetadata(data),
   ]

@@ -229,6 +229,92 @@ function checkValidEncoding(data: ListData): CheckResult {
   }
 }
 
+function checkCaseInsensitiveDuplicates(data: ListData): CheckResult {
+  const normalized = new Map<string, string[]>()
+  for (const [key, word] of Object.entries(data.wordMap)) {
+    const lower = word.toLowerCase()
+    const existing = normalized.get(lower)
+    if (existing) {
+      existing.push(`${key}:"${word}"`)
+    } else {
+      normalized.set(lower, [`${key}:"${word}"`])
+    }
+  }
+
+  const dupes: [string, string[]][] = []
+  for (const [lower, entries] of normalized) {
+    if (entries.length > 1) {
+      dupes.push([lower, entries])
+    }
+  }
+
+  return {
+    id: 'case-insensitive-dupes',
+    name: 'Case-insensitive duplicates',
+    severity: 'FAIL',
+    passed: dupes.length === 0,
+    message:
+      dupes.length === 0
+        ? 'none found'
+        : `${dupes.length} group${dupes.length !== 1 ? 's' : ''} of case-insensitive duplicates`,
+    details:
+      dupes.length > 0
+        ? dupes
+            .slice(0, 10)
+            .map(([lower, entries]) => `"${lower}": ${entries.join(', ')}`)
+        : undefined,
+  }
+}
+
+function checkWhitespace(data: ListData): CheckResult {
+  const leading: string[] = []
+  const trailing: string[] = []
+  const tabs: string[] = []
+  const internal: string[] = []
+
+  for (const [key, word] of Object.entries(data.wordMap)) {
+    if (word !== word.trimStart()) leading.push(`${key}:"${word}"`)
+    if (word !== word.trimEnd()) trailing.push(`${key}:"${word}"`)
+    if (word.includes('\t')) tabs.push(`${key}:"${word}"`)
+    // Internal whitespace (spaces within the word, excluding leading/trailing)
+    const trimmed = word.trim()
+    if (/\s/.test(trimmed) && trimmed.includes(' ')) {
+      internal.push(`${key}:"${word}"`)
+    }
+  }
+
+  const problems = leading.length + trailing.length + tabs.length
+  const details: string[] = []
+  if (leading.length > 0)
+    details.push(
+      `leading whitespace: ${leading.slice(0, 3).join(', ')}${leading.length > 3 ? ` ... (${leading.length} total)` : ''}`,
+    )
+  if (trailing.length > 0)
+    details.push(
+      `trailing whitespace: ${trailing.slice(0, 3).join(', ')}${trailing.length > 3 ? ` ... (${trailing.length} total)` : ''}`,
+    )
+  if (tabs.length > 0)
+    details.push(
+      `tab characters: ${tabs.slice(0, 3).join(', ')}${tabs.length > 3 ? ` ... (${tabs.length} total)` : ''}`,
+    )
+  if (internal.length > 0)
+    details.push(
+      `internal spaces (info): ${internal.slice(0, 3).join(', ')}${internal.length > 3 ? ` ... (${internal.length} total)` : ''}`,
+    )
+
+  return {
+    id: 'whitespace',
+    name: 'Whitespace',
+    severity: 'FAIL',
+    passed: problems === 0,
+    message:
+      problems === 0
+        ? 'clean'
+        : `${problems} whitespace issue${problems !== 1 ? 's' : ''} found`,
+    details: details.length > 0 ? details : undefined,
+  }
+}
+
 export function runCriticalChecks(data: ListData): CheckResult[] {
   return [
     checkWordCount(data),
@@ -236,7 +322,9 @@ export function runCriticalChecks(data: ListData): CheckResult[] {
     checkKeyCompleteness(data),
     checkNoDuplicateKeys(data),
     checkNoDuplicateWords(data),
+    checkCaseInsensitiveDuplicates(data),
     checkNoEmptyWords(data),
+    checkWhitespace(data),
     checkNoControlCharacters(data),
     checkValidEncoding(data),
   ]
