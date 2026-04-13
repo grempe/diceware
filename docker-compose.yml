@@ -1,5 +1,6 @@
 services:
   diceware:
+    container_name: diceware
     image: ghcr.io/grempe/diceware:latest
     build: .
     ports:
