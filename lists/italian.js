@@ -4037,7 +4037,7 @@ export const italian = {
   41464: 'navale',
   41465: 'navali',
   41466: 'navata',
-  41511: 'navata',
+  41511: 'navate',
   41512: 'nave',
   41513: 'navi',
   41514: 'naviga',
