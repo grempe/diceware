@@ -1,3 +1,4 @@
 nodejs            25.8.0
+deno              2.7.12
 aqua:go-task/task latest
 aqua:caddyserver/caddy latest

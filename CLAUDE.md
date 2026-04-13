@@ -14,7 +14,7 @@ Development tools are managed by [mise](https://mise.jdx.dev/) and defined in `.
 mise install
 ```
 
-This provides Node.js, Caddy, and [Task](https://taskfile.dev/).
+This provides Node.js, Deno, Caddy, and [Task](https://taskfile.dev/).
 
 ## Running Locally
 
@@ -34,7 +34,10 @@ All tasks are defined in `Taskfile.yml`. Run `task` to list them.
 - `task lint` — check linting and formatting
 - `task lint-fix` — auto-fix lint and format issues
 - `task format` — format all files
-- `task precommit` — run all precommit checks
+- `task verify` — validate all word list files (Tier 1+2 checks)
+- `task verify -- lists/eff.js` — validate a specific list file
+- `task verify-all` — run all checks including expensive Tier 3 metrics
+- `task precommit` — run all precommit checks (lint + verify)
 - `task install` — install npm dependencies (runs automatically as a dependency of lint tasks)
 
 ## Architecture

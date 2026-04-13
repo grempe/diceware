@@ -41,8 +41,19 @@ tasks:
     cmds:
       - npx biome format --write .
 
+  verify:
+    desc: Validate diceware word list files
+    cmds:
+      - deno run --allow-read --allow-env tools/verify-lists.ts {{.CLI_ARGS}}
+
+  verify-all:
+    desc: Validate all word lists with all tiers (including expensive checks)
+    cmds:
+      - deno run --allow-read --allow-env tools/verify-lists.ts --all-tiers
+
   precommit:
-    desc: Run all precommit checks (lint + format)
+    desc: Run all precommit checks (lint + verify)
     deps: [install]
     cmds:
       - task: lint
+      - task: verify
