@@ -1,6 +1,6 @@
 export const metadata = {
   name: 'Dutch',
-  source: 'https://mko.re/diceware/diceware-wordlist-nl.txt',
+  source: 'https://mko.re/blog/diceware-nl/',
   author: 'Remko Tronçon',
   verification: {
     date: '2026-04-13',
