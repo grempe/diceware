@@ -31,7 +31,14 @@ function reset() {
   if (select) select.value = getCurrentList()
 }
 
-// Generate words by rolling virtual dice.
+// Generate words by simulating physical dice rolls with the CSPRNG.
+// Each die face is secureRandom(6) → [0,5], then +1 → [1,6].
+// Five rolls produce a 5-digit key ("11111"–"66666") covering all 6^5 = 7,776
+// entries in a diceware word list.  Two rolls produce a 2-digit key ("11"–"66")
+// covering all 6^2 = 36 special characters.  Because each roll is an independent
+// uniform draw, the combined key is uniform over the full list — each word or
+// symbol is equally likely, contributing exactly log2(7776) ≈ 12.92 or
+// log2(36) ≈ 5.17 bits of entropy.
 function getWords(numWords = 1, numRollsPerWord = 5) {
   const words = []
   for (let i = 0; i < numWords; i++) {
@@ -61,10 +68,16 @@ document.querySelector('#languageSelect')?.addEventListener('change', (e) => {
   reset()
 })
 
-// Shuffle — Fisher-Yates using CSPRNG, re-shuffle if order unchanged
+// Fisher-Yates (Knuth) shuffle using the CSPRNG.
+// On each iteration, element i is swapped with a uniformly random element from
+// [0, i].  secureRandom(i + 1) returns [0, i] — exactly the range Fisher-Yates
+// requires.  The do-while loop guarantees the visible order actually changes;
+// the Set-size guard above it prevents an infinite loop when every word is the
+// same (since no permutation can change the display in that case).
+// Shuffling does not alter entropy — word *selection* is what provides entropy,
+// not word *ordering*.
 document.querySelector('#shuffleButton')?.addEventListener('click', () => {
   if (wordList.length < 2) return
-  // If all words are identical, shuffling cannot change the order
   if (new Set(wordList.map((w) => w.word)).size < 2) return
   const original = wordList.map((w) => w.word).join(' ')
   do {

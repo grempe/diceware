@@ -1,8 +1,14 @@
 // Entropy and crack time calculations using native BigInt.
 // See: http://world.std.com/~reinhold/dicewarefaq.html#calculatingentropy
 
+// Each diceware word is chosen uniformly from 7,776 possibilities (6^5 dice
+// rolls), contributing log2(7776) ≈ 12.92 bits of entropy.  Each special
+// character is chosen from 36 possibilities (6^2 dice rolls), contributing
+// log2(36) ≈ 5.17 bits.  These constants are used for the UI entropy display;
+// the exact keyspace for crack-time estimation is computed separately via
+// BigInt exponentiation to avoid floating-point rounding.
 export const ENTROPY_PER_WORD = Math.log2(7776) // ~12.92 bits
-export const ENTROPY_PER_SYMBOL = Math.log2(36) // ~5.16 bits
+export const ENTROPY_PER_SYMBOL = Math.log2(36) // ~5.17 bits
 
 export function calcEntropy(isSymbol) {
   return isSymbol ? ENTROPY_PER_SYMBOL : ENTROPY_PER_WORD
@@ -24,7 +30,11 @@ export function formatNumber(n, decimals) {
   return fmt.format(n)
 }
 
-// Divide two BigInts and return a Number (precision loss acceptable for display).
+// Divide two BigInts and return a Number.  When both operands are small enough
+// for exact double-precision representation, a simple Number conversion suffices.
+// For larger values, we split into integer and remainder parts to preserve as
+// much precision as possible — the slight loss is acceptable since the result
+// is only used for human-readable crack-time display.
 function bigDivToNumber(a, b) {
   if (a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
     const intPart = a / b
@@ -44,7 +54,11 @@ export function formatSpeed(guessesPerSec) {
   return fmt.format(n)
 }
 
-// Attacker tiers with estimated guesses per second.
+// Attacker tiers with estimated guesses per second.  These represent
+// order-of-magnitude capabilities for offline brute-force attacks:
+//   Consumer GPU   — a single high-end GPU (e.g. RTX 4090) running Hashcat
+//   Professional   — a dedicated hash-cracking cluster or cloud burst
+//   Nation-state   — theoretical upper bound for a well-funded adversary
 const ATTACK_TIERS = [
   {
     id: 'consumer',
@@ -63,16 +77,19 @@ const ATTACK_TIERS = [
   },
 ]
 
-// Calculate crack time given a pre-computed keyspace half.
+// Expected crack time assuming the attacker tries keys uniformly at random.
+// On average, half the keyspace must be searched before finding the correct key.
 function crackTimeYears(halfKeySpace, guessesPerSec) {
   const seconds = bigDivToNumber(halfKeySpace, guessesPerSec)
   return seconds / (365.25 * 24 * 3600)
 }
 
-// Calculate crack times for all attacker tiers from total entropy bits.
-// Correctly handles mixed words + symbols.
-export function calcAllTiers(totalEntropyBits) {
-  const keySpace = 2n ** BigInt(Math.round(totalEntropyBits))
+// Calculate crack times for all attacker tiers.
+// The keyspace is computed exactly via BigInt exponentiation: 7776^words × 36^symbols.
+// This avoids the precision loss that would come from rounding fractional entropy
+// bits (e.g. 77.55) to an integer before computing 2^n.
+export function calcAllTiers(wordCount, symbolCount) {
+  const keySpace = 7776n ** BigInt(wordCount) * 36n ** BigInt(symbolCount)
   const halfKeySpace = keySpace / 2n
   return {
     keySpace,

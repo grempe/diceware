@@ -185,8 +185,8 @@ export function displayStats(wordList, totalEntropy) {
   total.textContent = `Total: ${totalEntropy.toFixed(2)} bits`
   breakdown.append(total)
 
-  // Crack time card
-  const { tiers } = calcAllTiers(totalEntropy)
+  // Crack time card — pass counts for exact BigInt keyspace calculation
+  const { tiers } = calcAllTiers(wordCount, symbolCount)
   const tbody = $('#crackTimeTiers')
   tbody.replaceChildren()
 
