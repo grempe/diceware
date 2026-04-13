@@ -1,0 +1,66 @@
+Verification Report: Czech
+File: czech.js
+Date: 2026-04-13
+Grade: B (18/23 passed)
+
+STRUCTURAL (11/11)
+  PASS  Word count: 7776 entries (expected 7776)
+  PASS  Key format: all 7776 keys match ^[1-6]{5}$
+  PASS  Key completeness: all 7776 expected keys present
+  PASS  No duplicate keys: 7776 unique keys
+  PASS  No duplicate words: all words are unique
+  PASS  Case-insensitive duplicates: none found
+  PASS  No empty words: no empty words
+  PASS  Whitespace: clean
+  PASS  Smart/curly quotes: none found
+  PASS  No control characters: no control characters found
+  PASS  Valid UTF-8 encoding: no encoding issues detected
+
+QUALITY (4/7)
+  PASS  Unicode normalization duplicates: none found (NFC, NFKD)
+  FAIL  Prefix-free: 1086 prefix pairs found
+          "!" is a prefix of "!!"
+          "!!" is a prefix of "!!!"
+          "#" is a prefix of "##"
+          "##" is a prefix of "###"
+          "$" is a prefix of "$$"
+          ... (1081 more)
+  FAIL  Word length: min=1 max=6 mean=4.7 median=5
+          min=1 max=6 mean=4.74 median=5
+          entropy: 12.92 bits/word, efficiency: 2.73 bits/char
+          charset: 68 unique chars, brute-force line: BELOW (1 chars * 6.1 bits = 6.1 < 12.9)
+  FAIL  Minimum word length: 830 words shorter than 3 characters
+          11111:"0" (1 char)
+          11112:"1" (1 char)
+          11113:"2" (1 char)
+          11114:"3" (1 char)
+          11115:"4" (1 char)
+          11116:"5" (1 char)
+          11121:"6" (1 char)
+          11122:"7" (1 char)
+          11123:"8" (1 char)
+          11124:"9" (1 char)
+          ... (820 more)
+  PASS  Key sorted order: die roll keys are in ascending order
+  PASS  Character set: 68 unique chars, script: Latin
+  PASS  Metadata export: present
+
+ANALYSIS (3/5)
+  PASS  Entropy & efficiency: 12.92 bits/word
+  FAIL  Word sorted order: 259 out-of-order words
+          "9" (11124) > "10" (11125)
+          "99" (11354) > "100" (11355)
+          "999" (11436) > "1000" (11441)
+          "9999" (11643) > "-" (11644)
+          "ahoj" (12243) > "ach" (12244)
+          ... (254 more)
+  FAIL  Non-word entries: 417 non-word/filler entries detected (replacement candidates)
+          single characters (52): 11111:"0", 11112:"1", 11113:"2", 11114:"3", 11115:"4" ... (52 total)
+          two-letter entries (676): 12152:"aa", 12155:"ab", 12162:"ac", 12163:"ač", 12166:"ad" ... (676 total)
+          all-digit entries (201): 11111:"0", 11112:"1", 11113:"2", 11114:"3", 11115:"4" ... (201 total)
+          all-symbol entries (39): 11644:"-", 11645:"--", 11646:"---", 11651:";", 11652:":" ... (39 total)
+          alphabetical runs (2): 12156:"abc", 64534:"xyz"
+          round/sequential numbers (47): 11111:"0", 11125:"10", 11143:"20", 11161:"30", 11215:"40" ... (47 total)
+          repeated characters (123): 11126:"11", 11145:"22", 11164:"33", 11223:"44", 11242:"55" ... (123 total)
+  PASS  Long words (>9 chars): no words exceed 9 characters
+  PASS  Normalization consistency: consistent with: NFC, NFKC

@@ -1,0 +1,46 @@
+Verification Report: Russian
+File: russian.js
+Date: 2026-04-13
+Grade: A (22/24 passed)
+
+STRUCTURAL (11/11)
+  PASS  Word count: 7776 entries (expected 7776)
+  PASS  Key format: all 7776 keys match ^[1-6]{5}$
+  PASS  Key completeness: all 7776 expected keys present
+  PASS  No duplicate keys: 7776 unique keys
+  PASS  No duplicate words: all words are unique
+  PASS  Case-insensitive duplicates: none found
+  PASS  No empty words: no empty words
+  PASS  Whitespace: clean
+  PASS  Smart/curly quotes: none found
+  PASS  No control characters: no control characters found
+  PASS  Valid UTF-8 encoding: no encoding issues detected
+
+QUALITY (6/7)
+  PASS  Unicode normalization duplicates: none found (NFC, NFKD)
+  FAIL  Prefix-free: 824 prefix pairs found
+          "Єжик" is a prefix of "Єжиком"
+          "Єрш" is a prefix of "Єршик"
+          "абак" is a prefix of "абака"
+          "авар" is a prefix of "аварец"
+          "авто" is a prefix of "автол"
+          ... (819 more)
+  PASS  Word length: min=3 max=6 mean=4.9 median=5
+  PASS  Minimum word length: all words are 3+ characters
+  PASS  Key sorted order: die roll keys are in ascending order
+  PASS  Character set: 34 unique chars, script: Cyrillic
+  PASS  Metadata export: present
+
+ANALYSIS (5/6)
+  PASS  Metadata author: metadata.author not specified
+  PASS  Entropy & efficiency: 12.92 bits/word
+  FAIL  Word sorted order: 239 out-of-order words
+          "актин" (11344) > "актЄр" (11345)
+          "альЪнс" (11452) > "алЄнка" (11453)
+          "амхара" (11534) > "амЄба" (11535)
+          "бадьЪн" (12432) > "бадЪга" (12433)
+          "балык" (12515) > "балЪсы" (12516)
+          ... (234 more)
+  PASS  Non-word entries: no filler entries detected
+  PASS  Long words (>9 chars): no words exceed 9 characters
+  PASS  Normalization consistency: consistent with: NFC, NFKC

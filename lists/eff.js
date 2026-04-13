@@ -1,10 +1,14 @@
-// source: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
-// license; UNLICENSED
 export const metadata = {
   name: 'English (EFF)',
-  source:
-    'https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases',
+  source: 'https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases',
   author: 'Electronic Frontier Foundation',
+  verification: {
+    date: '2026-04-13',
+    grade: 'A',
+    passed: 23,
+    total: 23,
+    report: 'reports/eff.txt',
+  },
 }
 
 export const eff = {

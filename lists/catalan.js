@@ -1,11 +1,15 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// license : Marcel Hernandez under the terms of the CC-BY-4.0 license
-// https://creativecommons.org/licenses/by/4.0/
 export const metadata = {
   name: 'Catalan',
   source: 'http://world.std.com/~reinhold/diceware.html',
   author: 'Marcel Hernandez',
   license: 'CC-BY-4.0',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 18,
+    total: 23,
+    report: 'reports/catalan.txt',
+  },
 }
 
 export const catalan = {
@@ -4455,7 +4459,7 @@ export const catalan = {
   43434: 'neveu',
   43435: 'neviscat',
   43436: 'neviscau',
-  43441: "n'hug",
+  43441: 'n\'hug',
   43442: 'niacina',
   43443: 'niant',
   43444: 'niau',
@@ -6366,7 +6370,7 @@ export const catalan = {
   56341: 'tengut',
   56342: 'tennis',
   56343: 'tens',
-  56344: "te'ns",
+  56344: 'te\'ns',
   56345: 'tensem',
   56346: 'tenutari',
   56351: 'tenyidor',

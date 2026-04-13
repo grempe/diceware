@@ -1,7 +1,12 @@
-// source : see below
-
 export const metadata = {
   name: 'Italian',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 20,
+    total: 25,
+    report: 'reports/italian.txt',
+  },
 }
 
 export const italian = {
@@ -7782,98 +7787,3 @@ export const italian = {
   66665: 'zzz',
   66666: 'zzzz',
 }
-
-/** list by Tarin Gamberini
-   
-  source: www.taringamberini.com/it/diceware_it_IT/lista-di-parole-diceware-in-italiano/
-  
-  #:"Note sulla licenza",
-  
-  Per:"superare l'incompatibilità fra GPL e GFDL [1] la lista di parole Diceware in",
-  italiano:"è distribuita in file separati, ognuno con la propria licenza:",
-  
-  *:"come file PDF sotto licenza GFDL [2] per consentire l'uso della",
-  :" lista come documentazione;",
-  *:"come file di testo puro sotto licenza GPL [3] per consentire l'uso della",
-  :" lista come parte di codice sorgente.",
-  :" ",
-  Questo:"documento è distribuito con licenza GPL poiché è destinato ad essere",
-  come:"parte di codice sorgente.",
-  
-  
-  #:"Note su questo documento",
-  
-  Questo:"documento è disponibile alla pagina:",
-  
-  :"   http://www.taringamberini.com/it/diceware_it_IT/lista-di-parole-diceware-in-italiano",
-  
-  La:"home page italiana di Diceware è disponibile alla pagina:",
-  
-  :"   http://www.taringamberini.com/it/diceware_it_IT",
-  
-  
-  #:"Note di rilascio",
-  
-  La:"versione corrente della lista di parole Diceware in italiano è la versione 3.",
-  
-  *:"versione 3 – 01/01/2017",
-  :" * sostituite parole con errori di ortografia o inesistenti",
-  *:"versione 2 – 20/12/2015",
-  :" * sostituite parole con errori di ortografia o inesistenti",
-  :" * impaginata lista con 36 pagine, 6 colonne per pagina, 6 paragrafi per",
-  :"   colonna, 6 righe per paragrafo, per agevolare la ricerca quando la lista è",
-  :"   stampata su fogli di carta",
-  *:"versione 1.0.11 – 24/01/2012",
-  
-  
-  #:"Sostienimi",
-  
-  Il:"lavoro per creare, mantenere e distribuire la lista di parole Diceware in",
-  italiano:"è tutto a mio carico. Ti chiedo gentilmente di sostenermi, puoi",
-  farlo:"in vari modi:",
-  
-  *:"sostienimi con una donazione:",
-  
-  :"   http://www.taringamberini.com/it/diceware_it_IT/lista-di-parole-diceware-in-italiano#sostienimi",
-  
-  *:"aggiungi al tuo sito un collegamento alla pagina",
-  :" "Lista di parole Diceware in italiano" con il seguente testo:",
-  
-  :"   ... lista di parole Diceware in italiano, curata da Tarin Gamberini, ...",
-  
-  :" in cui il testo "lista di parole Diceware in italiano" è un collegamento",
-  :" all'indirizzo:",
-  
-  :"   http://www.taringamberini.com/it/diceware_it_IT/lista-di-parole-diceware-in-italiano",
-  
-  *:"condividi la pagina "Lista di parole Diceware in italiano":",
-  
-  :"   http://www.taringamberini.com/it/diceware_it_IT/lista-di-parole-diceware-in-italiano",
-  
-  :" sulla tua social network preferita;",
-  
-  *:"contribuisci con osservazioni, commenti e suggerimenti aprendo una issue su",
-  :" GitHub [4] o scrivendomi una e-mail [5].",
-  
-  
-  
-  #:"Ringraziamenti",
-  
-  Ringrazio:"le seguenti persone che con osservazioni, commenti e suggerimenti",
-  hanno:"contribuito a migliorare la lista di parole Diceware in italiano:",
-  
-  *:"John Neffenger",
-  :" https://plus.google.com/+JohnNeffenger",
-  :" per aver segnalato parole con errori di ortografia",
-  *:"Filippo Valle",
-  :" https://github.com/fvalle1",
-  :" per aver suggerito di raggruppare le parole in 36 pagine di 6 colonne",
-  
-  
-  [1]:"https://en.wikipedia.org/wiki/GNU_Free_Documentation_License#GPL_incompatible_in_both_directions",
-  [2]:"http://www.gnu.org/licenses/fdl-1.3.en.html",
-  [3]:"http://www.gnu.org/licenses/gpl.html",
-  [4]:"https://github.com/taringamberini/diceware_word_list_it-IT/issues",
-  [5]:"http://www.taringamberini.com/it/contacts/",
-  
-  */

@@ -1,11 +1,14 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// provided by Povl Falk-Jensen
-// https://pastebin.com/rFatW8up
-// license: UNLICENSED
 export const metadata = {
   name: 'Danish',
   source: 'http://world.std.com/~reinhold/diceware.html',
   author: 'Povl Falk-Jensen',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 18,
+    total: 23,
+    report: 'reports/danish.txt',
+  },
 }
 
 export const danish = {
@@ -7749,7 +7752,7 @@ export const danish = {
   66564: '!',
   66565: '!!',
   66566: '!!!',
-  66611: "''''",
+  66611: '\'\'\'\'',
   66612: '#',
   66613: '##',
   66614: '###',

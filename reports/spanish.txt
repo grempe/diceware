@@ -1,0 +1,66 @@
+Verification Report: Spanish
+File: spanish.js
+Date: 2026-04-13
+Grade: B (19/24 passed)
+
+STRUCTURAL (11/11)
+  PASS  Word count: 7776 entries (expected 7776)
+  PASS  Key format: all 7776 keys match ^[1-6]{5}$
+  PASS  Key completeness: all 7776 expected keys present
+  PASS  No duplicate keys: 7776 unique keys
+  PASS  No duplicate words: all words are unique
+  PASS  Case-insensitive duplicates: none found
+  PASS  No empty words: no empty words
+  PASS  Whitespace: clean
+  PASS  Smart/curly quotes: none found
+  PASS  No control characters: no control characters found
+  PASS  Valid UTF-8 encoding: no encoding issues detected
+
+QUALITY (4/7)
+  PASS  Unicode normalization duplicates: none found (NFC, NFKD)
+  FAIL  Prefix-free: 909 prefix pairs found
+          "!" is a prefix of "!!"
+          "!!" is a prefix of "!!!"
+          """ is a prefix of """"
+          """" is a prefix of """""
+          "#" is a prefix of "##"
+          ... (904 more)
+  FAIL  Word length: min=1 max=8 mean=4.5 median=5
+          min=1 max=8 mean=4.47 median=5
+          entropy: 12.92 bits/word, efficiency: 2.89 bits/char
+          charset: 100 unique chars, brute-force line: BELOW (1 chars * 6.6 bits = 6.6 < 12.9)
+  FAIL  Minimum word length: 325 words shorter than 3 characters
+          11111:"0" (1 char)
+          11112:"1" (1 char)
+          11113:"2" (1 char)
+          11114:"3" (1 char)
+          11115:"4" (1 char)
+          11116:"5" (1 char)
+          11121:"6" (1 char)
+          11122:"7" (1 char)
+          11123:"8" (1 char)
+          11124:"9" (1 char)
+          ... (315 more)
+  PASS  Key sorted order: die roll keys are in ascending order
+  PASS  Character set: 100 unique chars, script: Latin
+  PASS  Metadata export: present
+
+ANALYSIS (4/6)
+  PASS  Metadata author: metadata.author not specified
+  PASS  Entropy & efficiency: 12.92 bits/word
+  FAIL  Word sorted order: 164 out-of-order words
+          "9" (11124) > "10" (11125)
+          "99" (11354) > "100" (11355)
+          "999" (15454) > "1001" (15455)
+          "9999" (15564) > "-" (15565)
+          "$$$" (15631) > "%" (15632)
+          ... (159 more)
+  FAIL  Non-word entries: 1292 non-word/filler entries detected (replacement candidates)
+          single characters (65): 11111:"0", 11112:"1", 11113:"2", 11114:"3", 11115:"4" ... (65 total)
+          two-letter entries (117): 21161:"aa", 21163:"áá", 21645:"al", 22615:"Aº", 23254:"as" ... (117 total)
+          all-digit entries (1043): 11111:"0", 11112:"1", 11113:"2", 11114:"3", 11115:"4" ... (1043 total)
+          all-symbol entries (76): 15565:"-", 15566:"--", 15611:"---", 15612:"!", 15613:"!!" ... (76 total)
+          round/sequential numbers (117): 11111:"0", 11125:"10", 11143:"20", 11161:"30", 11215:"40" ... (117 total)
+          repeated characters (108): 11126:"11", 11145:"22", 11164:"33", 11223:"44", 11242:"55" ... (108 total)
+  PASS  Long words (>9 chars): no words exceed 9 characters
+  PASS  Normalization consistency: consistent with: NFC

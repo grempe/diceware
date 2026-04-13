@@ -1,11 +1,14 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// http://www.hyuki.com/diceware/
-// translated by Hiroshi Yuki, with a Japanese wordlist in Romaji by J Greely
-// license: UNLICENSED
 export const metadata = {
   name: 'Japanese',
   source: 'http://www.hyuki.com/diceware/',
   author: 'Hiroshi Yuki (Romaji by J Greely)',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 19,
+    total: 23,
+    report: 'reports/japanese.txt',
+  },
 }
 
 export const japanese = {

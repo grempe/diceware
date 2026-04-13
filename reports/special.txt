@@ -1,0 +1,40 @@
+Verification Report: Special Characters
+File: special.js
+Date: 2026-04-13
+Grade: A (23/24 passed)
+
+STRUCTURAL (11/11)
+  PASS  Word count: 36 entries (expected 36)
+  PASS  Key format: all 36 keys match ^[1-6]{2}$
+  PASS  Key completeness: all 36 expected keys present
+  PASS  No duplicate keys: 36 unique keys
+  PASS  No duplicate words: all words are unique
+  PASS  Case-insensitive duplicates: none found
+  PASS  No empty words: no empty words
+  PASS  Whitespace: clean
+  PASS  Smart/curly quotes: none found
+  PASS  No control characters: no control characters found
+  PASS  Valid UTF-8 encoding: no encoding issues detected
+
+QUALITY (7/7)
+  PASS  Unicode normalization duplicates: none found (NFC, NFKD)
+  PASS  Prefix-free: skipped (special list)
+  PASS  Word length: min=1 max=1 mean=1.0 median=1
+  PASS  Minimum word length: skipped (special list)
+  PASS  Key sorted order: die roll keys are in ascending order
+  PASS  Character set: 36 unique chars, scripts: unknown
+  PASS  Metadata export: present
+
+ANALYSIS (5/6)
+  PASS  Metadata source: metadata.source not specified
+  PASS  Entropy & efficiency: 5.17 bits/word
+  FAIL  Word sorted order: 17 out-of-order words
+          "|" (14) > "<" (15)
+          "~" (16) > "@" (21)
+          "*" (22) > "[" (23)
+          ">" (25) > "_" (26)
+          "#" (31) > "(" (32)
+          ... (12 more)
+  PASS  Non-word entries: skipped (special list)
+  PASS  Long words: skipped (special list)
+  PASS  Normalization consistency: consistent with: NFC, NFD, NFKC, NFKD

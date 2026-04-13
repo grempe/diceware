@@ -1,0 +1,67 @@
+Verification Report: English (Diceware Alt)
+File: alternative.js
+Date: 2026-04-13
+Grade: B (19/24 passed)
+
+STRUCTURAL (11/11)
+  PASS  Word count: 7776 entries (expected 7776)
+  PASS  Key format: all 7776 keys match ^[1-6]{5}$
+  PASS  Key completeness: all 7776 expected keys present
+  PASS  No duplicate keys: 7776 unique keys
+  PASS  No duplicate words: all words are unique
+  PASS  Case-insensitive duplicates: none found
+  PASS  No empty words: no empty words
+  PASS  Whitespace: clean
+  PASS  Smart/curly quotes: none found
+  PASS  No control characters: no control characters found
+  PASS  Valid UTF-8 encoding: no encoding issues detected
+
+QUALITY (4/7)
+  PASS  Unicode normalization duplicates: none found (NFC, NFKD)
+  FAIL  Prefix-free: 1927 prefix pairs found
+          "!" is a prefix of "!!"
+          "#" is a prefix of "##"
+          "$" is a prefix of "$$"
+          "%" is a prefix of "%%"
+          "(" is a prefix of "()"
+          ... (1922 more)
+  FAIL  Word length: min=1 max=6 mean=4.2 median=4
+          min=1 max=6 mean=4.23 median=4
+          entropy: 12.92 bits/word, efficiency: 3.05 bits/char
+          charset: 55 unique chars, brute-force line: BELOW (1 chars * 5.8 bits = 5.8 < 12.9)
+  FAIL  Minimum word length: 835 words shorter than 3 characters
+          11111:"a" (1 char)
+          11115:"aa" (2 chars)
+          11123:"ab" (2 chars)
+          11223:"ac" (2 chars)
+          11265:"ad" (2 chars)
+          11362:"ae" (2 chars)
+          11366:"af" (2 chars)
+          11425:"ag" (2 chars)
+          11453:"ah" (2 chars)
+          11464:"ai" (2 chars)
+          ... (825 more)
+  PASS  Key sorted order: die roll keys are in ascending order
+  PASS  Character set: 55 unique chars, script: Latin
+  PASS  Metadata export: present
+
+ANALYSIS (4/6)
+  PASS  Metadata author: metadata.author not specified
+  PASS  Entropy & efficiency: 12.92 bits/word
+  FAIL  Word sorted order: 42 out-of-order words
+          "a's" (11112) > "a-1" (11113)
+          "b&w" (13144) > "b's" (13145)
+          "b's" (13145) > "b-52" (13146)
+          "c#" (15535) > "c&w" (15536)
+          "c&w" (15536) > "c's" (15541)
+          ... (37 more)
+  FAIL  Non-word entries: 375 non-word/filler entries detected (replacement candidates)
+          single characters (51): 11111:"a", 13143:"b", 15534:"c", 22215:"d", 23641:"e" ... (51 total)
+          two-letter entries (676): 11115:"aa", 11123:"ab", 11223:"ac", 11265:"ad", 11362:"ae" ... (676 total)
+          all-digit entries (186): 65314:"0", 65315:"007", 65316:"1", 65326:"10", 65332:"100" ... (186 total)
+          all-symbol entries (23): 65242:"!", 65243:"!!", 65244:"""""", 65245:"#", 65246:"##" ... (23 total)
+          alphabetical runs (3): 11141:"abc", 11143:"abcd", 64432:"xyz"
+          round/sequential numbers (43): 65314:"0", 65326:"10", 65332:"100", 65334:"1000", 65416:"1500" ... (43 total)
+          repeated characters (112): 11115:"aa", 11116:"aaa", 11121:"aaaa", 13435:"bb", 13436:"bbb" ... (112 total)
+  PASS  Long words (>9 chars): no words exceed 9 characters
+  PASS  Normalization consistency: consistent with: NFC, NFD, NFKC, NFKD

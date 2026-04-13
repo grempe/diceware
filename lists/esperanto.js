@@ -1,11 +1,14 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// translated by Makis Diras, including a Esperanto word list.
-// http://esperantajxo.blogspot.com/2014/07/dajsvaro.html
-// license: UNLICENSED
 export const metadata = {
   name: 'Esperanto',
   source: 'http://esperantajxo.blogspot.com/2014/07/dajsvaro.html',
   author: 'Makis Diras',
+  verification: {
+    date: '2026-04-13',
+    grade: 'C',
+    passed: 17,
+    total: 23,
+    report: 'reports/esperanto.txt',
+  },
 }
 
 export const esperanto = {

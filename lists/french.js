@@ -1,11 +1,14 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// http://web.archive.org/web/20041012030451/www.gjldp.org/CHARENTAISES/article.php3?id_article=4
-// translated by Joachim Dubuquoy-Portois
-// license: UNLICENSED
 export const metadata = {
   name: 'French',
   source: 'http://world.std.com/~reinhold/diceware.html',
   author: 'Joachim Dubuquoy-Portois',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 18,
+    total: 23,
+    report: 'reports/french.txt',
+  },
 }
 
 export const french = {
@@ -7786,4 +7789,3 @@ export const french = {
   66665: 'zzz',
   66666: 'zzzz',
 }
-/* List by Christophe-Marie Duquesne | https://github.com/chmduquesne/diceware-fr | used under CC BY */

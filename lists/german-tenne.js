@@ -1,12 +1,15 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// http://world.std.com/~reinhold/diceware_german.txt
-// provided by Benjamin Tenne under the terms of the GNU General Public License
-// license: GNU GENERAL PUBLIC LICENSE
 export const metadata = {
   name: 'German (Tenne)',
   source: 'http://world.std.com/~reinhold/diceware_german.txt',
   author: 'Benjamin Tenne',
   license: 'GNU GPL',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 18,
+    total: 23,
+    report: 'reports/german-tenne.txt',
+  },
 }
 
 export const german = {

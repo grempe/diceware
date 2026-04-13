@@ -26,5 +26,14 @@ export interface ListData {
   isSpecial: boolean
 }
 
+/** Verification summary written to list metadata */
+export interface VerificationMeta {
+  date: string
+  grade: string
+  passed: number
+  total: number
+  report: string
+}
+
 /** Check function signature */
 export type CheckFn = (data: ListData) => CheckResult | CheckResult[]

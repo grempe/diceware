@@ -38,12 +38,61 @@ main > section h2 a:hover {
   margin-bottom: 1.5rem;
 }
 
+#listVerification {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: -1.25rem;
+}
+
 .list-metadata a {
   color: var(--pico-muted-color);
 }
 
 .list-metadata a:hover {
   color: var(--pico-primary);
+}
+
+/* Verification grade */
+.grade-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 1.4rem;
+  height: 1.4rem;
+  line-height: 1.4rem;
+  text-align: center;
+  border-radius: 0.25rem;
+}
+
+.grade-a {
+  background: rgba(76, 175, 80, 0.2);
+  color: #66bb6a;
+}
+.grade-b {
+  background: rgba(66, 165, 245, 0.2);
+  color: #42a5f5;
+}
+.grade-c {
+  background: rgba(255, 167, 38, 0.2);
+  color: #ffa726;
+}
+.grade-d {
+  background: rgba(255, 112, 67, 0.2);
+  color: #ff7043;
+}
+.grade-f {
+  background: rgba(239, 83, 80, 0.2);
+  color: #ef5350;
+}
+
+.verification-summary {
+  font-size: 0.65rem;
+  color: var(--pico-muted-color);
+}
+
+.verification-report-link {
+  font-size: 0.65rem;
 }
 
 /* Button group layout */

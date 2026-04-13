@@ -1,0 +1,73 @@
+Verification Report: Finnish
+File: finnish.js
+Date: 2026-04-13
+Grade: B (19/24 passed)
+
+STRUCTURAL (11/11)
+  PASS  Word count: 7776 entries (expected 7776)
+  PASS  Key format: all 7776 keys match ^[1-6]{5}$
+  PASS  Key completeness: all 7776 expected keys present
+  PASS  No duplicate keys: 7776 unique keys
+  PASS  No duplicate words: all words are unique
+  PASS  Case-insensitive duplicates: none found
+  PASS  No empty words: no empty words
+  PASS  Whitespace: clean
+  PASS  Smart/curly quotes: none found
+  PASS  No control characters: no control characters found
+  PASS  Valid UTF-8 encoding: no encoding issues detected
+
+QUALITY (4/7)
+  PASS  Unicode normalization duplicates: none found (NFC, NFKD)
+  FAIL  Prefix-free: 135 prefix pairs found
+          "aina" is a prefix of "ainakohan"
+          "aio" is a prefix of "aiottu"
+          "ajattelu" is a prefix of "ajatteluunsa"
+          "aktiivi" is a prefix of "aktiivisillekaan"
+          "ale" is a prefix of "alene"
+          ... (130 more)
+  FAIL  Word length: min=2 max=31 mean=9.1 median=9
+          min=2 max=31 mean=9.14 median=9
+          entropy: 12.92 bits/word, efficiency: 1.41 bits/char
+          charset: 29 unique chars, brute-force line: BELOW (2 chars * 4.9 bits = 9.7 < 12.9)
+  FAIL  Minimum word length: 3 words shorter than 3 characters
+          13221:"ay" (2 chars)
+          14345:"et" (2 chars)
+          15425:"he" (2 chars)
+  PASS  Key sorted order: die roll keys are in ascending order
+  PASS  Character set: 29 unique chars, script: Latin
+  PASS  Metadata export: present
+
+ANALYSIS (4/6)
+  PASS  Metadata author: metadata.author not specified
+  PASS  Entropy & efficiency: 12.92 bits/word
+  FAIL  Word sorted order: 345 out-of-order words
+          "buurisodan" (13266) > "bändissä" (13311)
+          "edistys" (13426) > "edistäjä" (13431)
+          "eksyneitä" (13532) > "eksyä" (13533)
+          "elvyttävät" (13621) > "eläimeksi" (13622)
+          "elämyksiä" (13633) > "elämänohje" (13634)
+          ... (340 more)
+  PASS  Non-word entries: no filler entries detected
+  FAIL  Long words (>9 chars): 3080 words exceed 9 characters (replacement candidates)
+          11111:"aakkosellisissa" (15 chars)
+          11113:"aakkostettuina" (14 chars)
+          11114:"aallokoissa" (11 chars)
+          11115:"aallonmurtaja" (13 chars)
+          11116:"aallonpituuksiin" (16 chars)
+          11121:"aallonpohjien" (13 chars)
+          11122:"aaltoileva" (10 chars)
+          11123:"aaltoliike" (10 chars)
+          11124:"aaltopellissä" (13 chars)
+          11125:"aaltoviivojen" (13 chars)
+          11126:"aamiaisessa" (11 chars)
+          11131:"aamiaismajoitus" (15 chars)
+          11132:"aamiaistunteihin" (16 chars)
+          11133:"aamuaterioissa" (14 chars)
+          11136:"aamukukkuu" (10 chars)
+          11141:"aamulähetykseen" (15 chars)
+          11142:"aamulämpöjen" (12 chars)
+          11143:"aamunsarastuksessa" (18 chars)
+          11144:"aamupäivien" (11 chars)
+          11145:"aamuruskojen" (12 chars)
+          ... (3060 more)
+  PASS  Normalization consistency: consistent with: NFC, NFKC

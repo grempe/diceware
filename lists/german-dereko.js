@@ -1,12 +1,15 @@
-// source: https://github.com/klamann/diceware-dereko
-// provided by Sebastian Straub, derived from from work of the Leibniz-Institut
-// für Deutsche Sprache, which was published under CC BY-NC 3.0
-// license: CC BY-NC 3.0
 export const metadata = {
   name: 'German (DeReKo)',
   source: 'https://github.com/klamann/diceware-dereko',
   author: 'Sebastian Straub / Leibniz-Institut für Deutsche Sprache',
   license: 'CC BY-NC 3.0',
+  verification: {
+    date: '2026-04-13',
+    grade: 'A',
+    passed: 22,
+    total: 23,
+    report: 'reports/german-dereko.txt',
+  },
 }
 
 export const german_dereko = {

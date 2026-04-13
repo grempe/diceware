@@ -1,0 +1,33 @@
+Verification Report: English (EFF)
+File: eff.js
+Date: 2026-04-13
+Grade: A (23/23 passed)
+
+STRUCTURAL (11/11)
+  PASS  Word count: 7776 entries (expected 7776)
+  PASS  Key format: all 7776 keys match ^[1-6]{5}$
+  PASS  Key completeness: all 7776 expected keys present
+  PASS  No duplicate keys: 7776 unique keys
+  PASS  No duplicate words: all words are unique
+  PASS  Case-insensitive duplicates: none found
+  PASS  No empty words: no empty words
+  PASS  Whitespace: clean
+  PASS  Smart/curly quotes: none found
+  PASS  No control characters: no control characters found
+  PASS  Valid UTF-8 encoding: no encoding issues detected
+
+QUALITY (7/7)
+  PASS  Unicode normalization duplicates: none found (NFC, NFKD)
+  PASS  Prefix-free: no prefix pairs found
+  PASS  Word length: min=3 max=9 mean=7.0 median=7
+  PASS  Minimum word length: all words are 3+ characters
+  PASS  Key sorted order: die roll keys are in ascending order
+  PASS  Character set: 27 unique chars, script: Latin
+  PASS  Metadata export: present
+
+ANALYSIS (5/5)
+  PASS  Entropy & efficiency: 12.92 bits/word
+  PASS  Word sorted order: words are in alphabetical order by key
+  PASS  Non-word entries: no filler entries detected
+  PASS  Long words (>9 chars): no words exceed 9 characters
+  PASS  Normalization consistency: consistent with: NFC, NFD, NFKC, NFKD

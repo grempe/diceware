@@ -315,6 +315,35 @@ function checkWhitespace(data: ListData): CheckResult {
   }
 }
 
+function checkSmartQuotes(data: ListData): CheckResult {
+  const smartQuoteRe = /[\u2018\u2019\u201c\u201d]/
+  const problems: string[] = []
+
+  for (const [key, word] of Object.entries(data.wordMap)) {
+    if (smartQuoteRe.test(word)) {
+      const chars = [...word]
+        .filter((ch) => smartQuoteRe.test(ch))
+        .map(
+          (ch) =>
+            `U+${(ch.codePointAt(0) ?? 0).toString(16).padStart(4, '0').toUpperCase()}`,
+        )
+      problems.push(`${key}:"${word}" (${chars.join(', ')})`)
+    }
+  }
+
+  return {
+    id: 'smart-quotes',
+    name: 'Smart/curly quotes',
+    severity: 'FAIL',
+    passed: problems.length === 0,
+    message:
+      problems.length === 0
+        ? 'none found'
+        : `${problems.length} word${problems.length !== 1 ? 's' : ''} contain smart quotes`,
+    details: problems.length > 0 ? problems.slice(0, 10) : undefined,
+  }
+}
+
 export function runCriticalChecks(data: ListData): CheckResult[] {
   return [
     checkWordCount(data),
@@ -325,6 +354,7 @@ export function runCriticalChecks(data: ListData): CheckResult[] {
     checkCaseInsensitiveDuplicates(data),
     checkNoEmptyWords(data),
     checkWhitespace(data),
+    checkSmartQuotes(data),
     checkNoControlCharacters(data),
     checkValidEncoding(data),
   ]

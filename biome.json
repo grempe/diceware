@@ -14,7 +14,8 @@
       "**/*.css",
       "**/*.html",
       "!!**/node_modules",
-      "!!**/pico.classless.min.css"
+      "!!**/pico.classless.min.css",
+      "!!lists/*.js"
     ]
   },
   "formatter": {

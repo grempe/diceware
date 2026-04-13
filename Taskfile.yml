@@ -51,6 +51,11 @@ tasks:
     cmds:
       - deno run --allow-read --allow-env tools/verify-lists.ts --all-tiers
 
+  verify-report:
+    desc: Validate all word lists and generate verification reports
+    cmds:
+      - deno run --allow-read --allow-write --allow-env tools/verify-lists.ts --write
+
   precommit:
     desc: Run all precommit checks (lint + verify)
     deps: [install]

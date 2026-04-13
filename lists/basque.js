@@ -1,12 +1,15 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// license : provided by Aitor Fraile Azcue under the terms of the CC-BY-4.0 license
-// https://creativecommons.org/licenses/by/4.0/
-
 export const metadata = {
   name: 'Basque',
   source: 'http://world.std.com/~reinhold/diceware.html',
   author: 'Aitor Fraile Azcue',
   license: 'CC-BY-4.0',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 18,
+    total: 23,
+    report: 'reports/basque.txt',
+  },
 }
 
 export const basque = {

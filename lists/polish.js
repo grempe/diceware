@@ -1,12 +1,14 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// https://web.archive.org/web/20080926125905/http://www.drfugazi.eu.org/diceware
-// translated by Piotr (DrFugazi) Tarnowski, Computer Science Techniques Centre, University of Silesia, Katowice, PL, including a Polish word list.
-// license: UNLICENSED
-
 export const metadata = {
   name: 'Polish',
   source: 'http://world.std.com/~reinhold/diceware.html',
   author: 'Piotr Tarnowski',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 18,
+    total: 23,
+    report: 'reports/polish.txt',
+  },
 }
 
 export const polish = {

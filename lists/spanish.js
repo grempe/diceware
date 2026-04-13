@@ -1,10 +1,13 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// http://world.std.com/~reinhold/diceware_en_espanolA.htm
-// license: UNLICENSED
-
 export const metadata = {
   name: 'Spanish',
   source: 'http://world.std.com/~reinhold/diceware_en_espanolA.htm',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 19,
+    total: 24,
+    report: 'reports/spanish.txt',
+  },
 }
 
 export const spanish = {

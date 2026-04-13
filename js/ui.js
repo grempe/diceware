@@ -60,6 +60,36 @@ export function displayMetadata(meta) {
     if (i > 0) el.append(' · ')
     el.append(item)
   })
+
+  const vEl = $('#listVerification')
+  if (!vEl) return
+  vEl.replaceChildren()
+  if (meta.verification) {
+    const v = meta.verification
+
+    const gradeBadge = document.createElement('span')
+    gradeBadge.className = `grade-badge grade-${v.grade.toLowerCase()}`
+    gradeBadge.textContent = v.grade
+    vEl.append(gradeBadge)
+
+    const summary = document.createElement('span')
+    summary.className = 'verification-summary'
+    summary.textContent = `${v.passed}/${v.total} checks passed`
+    vEl.append(summary)
+
+    if (v.report) {
+      const reportLink = document.createElement('a')
+      reportLink.href = v.report
+      reportLink.target = '_blank'
+      reportLink.rel = 'noopener'
+      reportLink.textContent = 'Full report'
+      reportLink.className = 'verification-report-link'
+      vEl.append(reportLink)
+    }
+    vEl.hidden = false
+  } else {
+    vEl.hidden = true
+  }
 }
 
 export function resetUI(currentList) {

@@ -1,16 +1,16 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// provided by Vladimír Sedmík and a version in pdf, both under the GNU General Public License.
-// Czech grammar is highly inflected and Vladimír says all the words in the list are in the
-// basic shape; using varied shapes in your passphrase can increase security.
-// http://world.std.com/~reinhold/diceware_wordlist_cz.pdf
-// license: GNU GENERAL PUBLIC LICENSE
-
 export const metadata = {
   name: 'Czech',
   source: 'http://world.std.com/~reinhold/diceware.html',
   author: 'Vladimír Sedmík',
   license: 'GNU GPL',
   note: 'All words are in basic form; using varied grammatical forms can increase security',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 18,
+    total: 23,
+    report: 'reports/czech.txt',
+  },
 }
 
 export const czech = {

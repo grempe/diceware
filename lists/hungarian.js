@@ -1,5 +1,12 @@
 export const metadata = {
   name: 'Hungarian',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 20,
+    total: 25,
+    report: 'reports/hungarian.txt',
+  },
 }
 
 export const hungarian = {

@@ -1,13 +1,15 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// https://github.com/Taipo/MaoriDiceware/blob/master/diceware_maori.txt
-// provided by Rangi Kemara under a CC-BY license
-// license: CC-BY
-// https://creativecommons.org/licenses/by/2.0/
 export const metadata = {
   name: 'Maori',
   source: 'https://github.com/Taipo/MaoriDiceware',
   author: 'Rangi Kemara',
   license: 'CC-BY',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 19,
+    total: 23,
+    report: 'reports/maori.txt',
+  },
 }
 
 export const maori = {

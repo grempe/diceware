@@ -1,0 +1,66 @@
+Verification Report: Danish
+File: danish.js
+Date: 2026-04-13
+Grade: B (18/23 passed)
+
+STRUCTURAL (11/11)
+  PASS  Word count: 7776 entries (expected 7776)
+  PASS  Key format: all 7776 keys match ^[1-6]{5}$
+  PASS  Key completeness: all 7776 expected keys present
+  PASS  No duplicate keys: 7776 unique keys
+  PASS  No duplicate words: all words are unique
+  PASS  Case-insensitive duplicates: none found
+  PASS  No empty words: no empty words
+  PASS  Whitespace: clean
+  PASS  Smart/curly quotes: none found
+  PASS  No control characters: no control characters found
+  PASS  Valid UTF-8 encoding: no encoding issues detected
+
+QUALITY (4/7)
+  PASS  Unicode normalization duplicates: none found (NFC, NFKD)
+  FAIL  Prefix-free: 2095 prefix pairs found
+          "!" is a prefix of "!!"
+          "!!" is a prefix of "!!!"
+          "#" is a prefix of "##"
+          "##" is a prefix of "###"
+          "$" is a prefix of "$$"
+          ... (2090 more)
+  FAIL  Word length: min=1 max=6 mean=4.3 median=5
+          min=1 max=6 mean=4.32 median=5
+          entropy: 12.92 bits/word, efficiency: 2.99 bits/char
+          charset: 53 unique chars, brute-force line: BELOW (1 chars * 5.7 bits = 5.7 < 12.9)
+  FAIL  Minimum word length: 803 words shorter than 3 characters
+          11111:"a" (1 char)
+          11112:"aa" (2 chars)
+          11115:"ab" (2 chars)
+          11124:"ac" (2 chars)
+          11126:"ad" (2 chars)
+          11142:"ae" (2 chars)
+          11144:"af" (2 chars)
+          11242:"ag" (2 chars)
+          11321:"ah" (2 chars)
+          11324:"ai" (2 chars)
+          ... (793 more)
+  PASS  Key sorted order: die roll keys are in ascending order
+  PASS  Character set: 53 unique chars, script: Latin
+  PASS  Metadata export: present
+
+ANALYSIS (3/5)
+  PASS  Entropy & efficiency: 12.92 bits/word
+  FAIL  Word sorted order: 12 out-of-order words
+          "zzzz" (65626) > "0" (65631)
+          "9" (65644) > "10" (65645)
+          "99" (66314) > "100" (66315)
+          "999" (66356) > "1000" (66361)
+          "9999" (66563) > "!" (66564)
+          ... (7 more)
+  FAIL  Non-word entries: 417 non-word/filler entries detected (replacement candidates)
+          single characters (51): 11111:"a", 12262:"b", 14412:"c", 15326:"d", 16534:"e" ... (51 total)
+          two-letter entries (650): 11112:"aa", 11115:"ab", 11124:"ac", 11126:"ad", 11142:"ae" ... (650 total)
+          all-digit entries (201): 65631:"0", 65632:"1", 65633:"2", 65634:"3", 65635:"4" ... (201 total)
+          all-symbol entries (39): 66564:"!", 66565:"!!", 66566:"!!!", 66611:"''''", 66612:"#" ... (39 total)
+          alphabetical runs (2): 11121:"abc", 65225:"xyz"
+          round/sequential numbers (47): 65631:"0", 65645:"10", 65663:"20", 66121:"30", 66135:"40" ... (47 total)
+          repeated characters (124): 11112:"aa", 11113:"aaa", 11114:"aaaa", 12531:"bb", 12532:"bbb" ... (124 total)
+  PASS  Long words (>9 chars): no words exceed 9 characters
+  PASS  Normalization consistency: consistent with: NFC, NFKC

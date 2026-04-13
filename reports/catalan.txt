@@ -1,0 +1,62 @@
+Verification Report: Catalan
+File: catalan.js
+Date: 2026-04-13
+Grade: B (18/23 passed)
+
+STRUCTURAL (11/11)
+  PASS  Word count: 7776 entries (expected 7776)
+  PASS  Key format: all 7776 keys match ^[1-6]{5}$
+  PASS  Key completeness: all 7776 expected keys present
+  PASS  No duplicate keys: 7776 unique keys
+  PASS  No duplicate words: all words are unique
+  PASS  Case-insensitive duplicates: none found
+  PASS  No empty words: no empty words
+  PASS  Whitespace: clean
+  PASS  Smart/curly quotes: none found
+  PASS  No control characters: no control characters found
+  PASS  Valid UTF-8 encoding: no encoding issues detected
+
+QUALITY (4/7)
+  PASS  Unicode normalization duplicates: none found (NFC, NFKD)
+  FAIL  Prefix-free: 772 prefix pairs found
+          "ad" is a prefix of "adagio"
+          "agresa" is a prefix of "agresana"
+          "ajupin" is a prefix of "ajupint"
+          "albire" is a prefix of "albiren"
+          "aleja" is a prefix of "alejada"
+          ... (767 more)
+  FAIL  Word length: min=1 max=8 mean=6.6 median=7
+          min=1 max=8 mean=6.64 median=7
+          entropy: 12.92 bits/word, efficiency: 1.95 bits/char
+          charset: 38 unique chars, brute-force line: BELOW (1 chars * 5.2 bits = 5.2 < 12.9)
+  FAIL  Minimum word length: 40 words shorter than 3 characters
+          11111:"1r" (2 chars)
+          11112:"2n" (2 chars)
+          11113:"3r" (2 chars)
+          11114:"4t" (2 chars)
+          11115:"5e" (2 chars)
+          11116:"6e" (2 chars)
+          11121:"7e" (2 chars)
+          11122:"8e" (2 chars)
+          11123:"9e" (2 chars)
+          11333:"ad" (2 chars)
+          ... (30 more)
+  PASS  Key sorted order: die roll keys are in ascending order
+  PASS  Character set: 38 unique chars, script: Latin
+  PASS  Metadata export: present
+
+ANALYSIS (3/5)
+  PASS  Entropy & efficiency: 12.92 bits/word
+  FAIL  Word sorted order: 16 out-of-order words
+          "9e" (11123) > "10e" (11124)
+          "90e" (11136) > "100e" (11141)
+          "900e" (11153) > "1000e" (11154)
+          "coalitza" (15165) > "coa-rasa" (15166)
+          "neviscau" (43436) > "n'hug" (43441)
+          ... (11 more)
+  FAIL  Non-word entries: 4 non-word/filler entries detected (replacement candidates)
+          single characters (3): 33625:"j", 51544:"q", 64644:"w"
+          two-letter entries (28): 11333:"ad", 13233:"be", 15133:"cl", 16141:"da", 23446:"fe" ... (28 total)
+          repeated characters (1): 64652:"www"
+  PASS  Long words (>9 chars): no words exceed 9 characters
+  PASS  Normalization consistency: consistent with: NFC, NFD, NFKC, NFKD

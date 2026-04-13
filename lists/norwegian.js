@@ -1,14 +1,15 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// https://0101.no/diceware/diceware_nb_NO.txt
-// provided by Willy T. Koch
-// license: CC-BY
-// https://creativecommons.org/licenses/by/2.0/
-
 export const metadata = {
   name: 'Norwegian',
   source: 'https://0101.no/diceware/diceware_nb_NO.txt',
   author: 'Willy T. Koch',
   license: 'CC-BY',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 18,
+    total: 23,
+    report: 'reports/norwegian.txt',
+  },
 }
 
 export const norwegian = {

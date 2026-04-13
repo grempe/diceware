@@ -4,6 +4,7 @@ export interface CliArgs {
   json: boolean
   verbose: boolean
   noColor: boolean
+  write: boolean
   help: boolean
 }
 
@@ -17,6 +18,8 @@ OPTIONS:
   --help, -h       Show this help
   --tier=1,2       Which tiers to run (default: 1,2)
   --all-tiers      Run all tiers including expensive Tier 3
+  --write          Run all tiers, write verification metadata to list
+                   files and text reports to reports/
   --json           Output as JSON
   --verbose, -v    Show details for passing checks too
   --no-color       Disable color output
@@ -43,6 +46,7 @@ export function parseArgs(args: string[]): CliArgs {
     json: false,
     verbose: false,
     noColor: false,
+    write: false,
     help: false,
   }
 
@@ -55,6 +59,9 @@ export function parseArgs(args: string[]): CliArgs {
       result.verbose = true
     } else if (arg === '--no-color') {
       result.noColor = true
+    } else if (arg === '--write') {
+      result.write = true
+      result.tiers = [1, 2, 3]
     } else if (arg === '--all-tiers') {
       result.tiers = [1, 2, 3]
     } else if (arg.startsWith('--tier=')) {

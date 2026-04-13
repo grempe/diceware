@@ -1,20 +1,13 @@
-/*
-
-        First Roll
-     1   2   3   4   5   6
-
-S  1   !   @   #   $   %   ^
-e  2   &   *   (   )   -   =
-c  3   +   [   ]   {   }   \
-o  4   |   `   ;   :   '   "
-n  5   <   >   /   ?   .   ,
-d  6   ~   _   3   5   7   9
-
-*/
-
 export const metadata = {
   name: 'Special Characters',
   author: 'Arnold G. Reinhold',
+  verification: {
+    date: '2026-04-13',
+    grade: 'A',
+    passed: 23,
+    total: 24,
+    report: 'reports/special.txt',
+  },
 }
 
 export const special = {
@@ -45,7 +38,7 @@ export const special = {
   51: '%',
   52: '-',
   53: '}',
-  54: "'",
+  54: '\'',
   55: '.',
   56: '7',
   61: '^',

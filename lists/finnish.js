@@ -1,12 +1,14 @@
-// Suomenkielinen: "Diceware-sanasto.
-// Koottu: "suomen: "kielen: "ispell-projektins: "sanastosta.
-// http://ispell-fi.sourceforge.net/finnish.html
-// http://ispell-fi.sourceforge.net/COPYING
-// license: GNU GENERAL PUBLIC LICENSE
 export const metadata = {
   name: 'Finnish',
   source: 'http://ispell-fi.sourceforge.net/finnish.html',
   license: 'GNU GPL',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 19,
+    total: 24,
+    report: 'reports/finnish.txt',
+  },
 }
 
 export const finnish = {

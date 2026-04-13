@@ -1,12 +1,14 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// http://x42.com/diceware/
-// provided by Magnus Bodin
-// license: UNLICENSED
-
 export const metadata = {
   name: 'Swedish',
   source: 'http://x42.com/diceware/',
   author: 'Magnus Bodin',
+  verification: {
+    date: '2026-04-13',
+    grade: 'B',
+    passed: 18,
+    total: 23,
+    report: 'reports/swedish.txt',
+  },
 }
 
 export const swedish = {

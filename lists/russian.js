@@ -1,13 +1,13 @@
-// source: http://world.std.com/~reinhold/diceware.html#Diceware%20in%20Other%20Languages|outline
-// http://world.std.com/~reinhold/diceware.ru.zip
-// provided by "kitten," and a version in rtf.
-// http://world.std.com/~reinhold/diceware.ru.zip
-// http://world.std.com/~reinhold/diceware.ru.rtf
-// license: UNLICENSED
-
 export const metadata = {
   name: 'Russian',
   source: 'http://world.std.com/~reinhold/diceware.html',
+  verification: {
+    date: '2026-04-13',
+    grade: 'A',
+    passed: 22,
+    total: 24,
+    report: 'reports/russian.txt',
+  },
 }
 
 export const russian = {

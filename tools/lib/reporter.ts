@@ -1,4 +1,23 @@
-import type { CheckResult, ListData, Severity } from '../checks/types.ts'
+import type { CheckResult, Severity } from '../checks/types.ts'
+
+export function computeGrade(checks: CheckResult[]): string {
+  // Any structural (Tier 1) failure is an automatic F
+  const hasStructuralFailure = checks.some(
+    (ch) => ch.severity === 'FAIL' && !ch.passed,
+  )
+  if (hasStructuralFailure) return 'F'
+
+  const total = checks.length
+  if (total === 0) return 'A'
+  const passed = checks.filter((ch) => ch.passed).length
+  const pct = (passed / total) * 100
+
+  if (pct >= 90) return 'A'
+  if (pct >= 75) return 'B'
+  if (pct >= 60) return 'C'
+  if (pct >= 45) return 'D'
+  return 'F'
+}
 
 interface ReporterOptions {
   json: boolean
@@ -169,5 +188,54 @@ export class Reporter {
     return this.reports.some((r) =>
       r.checks.some((ch) => ch.severity === 'FAIL' && !ch.passed),
     )
+  }
+
+  getReports(): ListReport[] {
+    return this.reports
+  }
+
+  generateTextReport(report: ListReport, date: string): string {
+    const lines: string[] = []
+
+    const totalPassed = report.checks.filter((ch) => ch.passed).length
+    const totalChecks = report.checks.length
+    const grade = computeGrade(report.checks)
+
+    lines.push(`Verification Report: ${report.listName}`)
+    lines.push(`File: ${report.file}`)
+    lines.push(`Date: ${date}`)
+    lines.push(`Grade: ${grade} (${totalPassed}/${totalChecks} passed)`)
+    lines.push('')
+
+    const tierGroups: Array<{
+      label: string
+      severities: Severity[]
+    }> = [
+      { label: 'STRUCTURAL', severities: ['FAIL'] },
+      { label: 'QUALITY', severities: ['WARN'] },
+      { label: 'ANALYSIS', severities: ['INFO'] },
+    ]
+
+    for (const group of tierGroups) {
+      const checks = report.checks.filter((ch) =>
+        group.severities.includes(ch.severity),
+      )
+      if (checks.length === 0) continue
+
+      const groupPassed = checks.filter((ch) => ch.passed).length
+      lines.push(`${group.label} (${groupPassed}/${checks.length})`)
+      for (const check of checks) {
+        const label = check.passed ? 'PASS' : 'FAIL'
+        lines.push(`  ${label}  ${check.name}: ${check.message}`)
+        if (check.details && check.details.length > 0 && !check.passed) {
+          for (const detail of check.details) {
+            lines.push(`          ${detail}`)
+          }
+        }
+      }
+      lines.push('')
+    }
+
+    return lines.join('\n')
   }
 }
