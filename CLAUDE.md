@@ -6,21 +6,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Diceware passphrase generator — a single-page static web app that generates cryptographically secure passphrases using the browser's `crypto.getRandomValues()` CSPRNG. Hosted at https://diceware.rempe.us.
 
-## Running Locally
+## Prerequisites
 
-No build step. Serve the directory with Caddy:
+Development tools are managed by [mise](https://mise.jdx.dev/) and defined in `.tool-versions`. Install all dependencies with:
 
 ```sh
-caddy run
+mise install
+```
+
+This provides Node.js, Caddy, and [Task](https://taskfile.dev/).
+
+## Running Locally
+
+No build step. Serve the directory with:
+
+```sh
+task serve
 ```
 
 Then open http://localhost:8080. A local HTTP server is required (ES modules don't work over `file://`).
 
 ## Commands
 
-- `npm run lint` — check linting and formatting
-- `npm run lint:fix` — auto-fix lint and format issues
-- `npm run format` — format all files
+All tasks are defined in `Taskfile.yml`. Run `task` to list them.
+
+- `task serve` — start local dev server on http://localhost:8080
+- `task lint` — check linting and formatting
+- `task lint-fix` — auto-fix lint and format issues
+- `task format` — format all files
+- `task precommit` — run all precommit checks
+- `task install` — install npm dependencies (runs automatically as a dependency of lint tasks)
 
 ## Architecture
 
@@ -57,5 +72,5 @@ Zero runtime dependencies. The only external CSS is Pico CSS v2 (vendored locall
 
 ## Code Style
 
-- Linting and formatting via [Biome](https://biomejs.dev/) — run `npm run lint` to check, `npm run lint:fix` to auto-fix
+- Linting and formatting via [Biome](https://biomejs.dev/) — run `task lint` to check, `task lint-fix` to auto-fix
 - 2-space indent, single quotes, semicolons as needed

@@ -35,19 +35,47 @@ generation rolls a set of five virtual dice for **each** word. Words are chosen
 from the included Diceware word lists. The die roll numbers are shown next to
 each word.
 
-## Running Locally
+## Development
+
+### Prerequisites
+
+This project uses [mise](https://mise.jdx.dev/) to manage development tool
+dependencies (Node.js, Caddy, Task). Install mise, then from the project root:
+
+```sh
+mise install
+```
+
+This installs all required tools as defined in `.tool-versions`.
+
+### Available Tasks
+
+Development tasks are defined in `Taskfile.yml` and run via
+[Task](https://taskfile.dev/). To see all available tasks:
+
+```sh
+task
+```
+
+Key tasks:
+
+- `task serve` — start local dev server on <http://localhost:8080>
+- `task lint` — check linting and formatting
+- `task lint-fix` — auto-fix lint and format issues
+- `task format` — format all files
+- `task precommit` — run all precommit checks
+
+### Running Locally
 
 If you are security conscious you are encouraged to download the
 [source code](https://github.com/grempe/diceware) for this app and run it
 locally. You'll need to serve the application from a local HTTP server
 (ES modules require this — `file://` URLs won't work).
 
-A `Caddyfile` is included for use with [Caddy](https://caddyserver.com/).
-Install Caddy and run:
-
 ```sh
 cd diceware
-caddy run
+mise install
+task serve
 ```
 
 Then open <http://localhost:8080> in your browser.

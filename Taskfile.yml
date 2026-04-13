@@ -1,0 +1,48 @@
+# https://taskfile.dev
+
+version: "3"
+
+tasks:
+  default:
+    desc: List all available tasks
+    cmds:
+      - task --list-all
+
+  install:
+    desc: Install npm dependencies
+    cmds:
+      - npm install
+    sources:
+      - package.json
+    generates:
+      - node_modules/.package-lock.json
+
+  serve:
+    desc: Start local dev server on http://localhost:8080
+    aliases: [server, dev]
+    cmds:
+      - caddy run
+
+  lint:
+    desc: Check linting and formatting
+    deps: [install]
+    cmds:
+      - npx biome check .
+
+  lint-fix:
+    desc: Auto-fix lint and format issues
+    deps: [install]
+    cmds:
+      - npx biome check --write .
+
+  format:
+    desc: Format all files
+    deps: [install]
+    cmds:
+      - npx biome format --write .
+
+  precommit:
+    desc: Run all precommit checks (lint + format)
+    deps: [install]
+    cmds:
+      - task: lint
