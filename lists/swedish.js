@@ -258,7 +258,7 @@ export const swedish = {
   12156: 'abakus',
   12161: 'abbot',
   12162: 'abc',
-  12163: 'abc',
+  12163: 'abcbok',
   12164: 'aber',
   12165: 'abort',
   12166: 'absid',
