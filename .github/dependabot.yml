@@ -6,13 +6,6 @@ updates:
     interval: daily
     time: "13:00"
   open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: clipboard
-    versions:
-    - 2.0.7
-  - dependency-name: big.js
-    versions:
-    - 6.0.3
 
 - package-ecosystem: docker
   directory: "/"

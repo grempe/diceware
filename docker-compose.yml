@@ -1,5 +1,6 @@
 services:
   diceware:
+    image: ghcr.io/grempe/diceware:latest
     build: .
     ports:
       - "8080:8080"

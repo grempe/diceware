@@ -86,6 +86,28 @@ Alternatively, use any static file server:
 python3 -m http.server 8080
 ```
 
+### Running with Docker
+
+Pull the pre-built image from GitHub Container Registry and run it:
+
+```sh
+docker run --rm -p 8080:8080 ghcr.io/grempe/diceware:latest
+```
+
+Then open <http://localhost:8080> in your browser.
+
+Or use Docker Compose to pull and run the pre-built image:
+
+```sh
+docker compose up
+```
+
+To build the image locally from source instead:
+
+```sh
+docker compose up --build
+```
+
 ### Tin Foil Hat Version
 
 If you want to be *really, really* secure, roll the dice with a flashlight
@@ -101,7 +123,7 @@ the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## Legal
 
-Copyright (c) 2016 Glenn Rempe (<glenn@rempe.us>)
+Copyright (c) 2016-2026 Glenn Rempe (<glenn@rempe.us>)
 
 Available as open source under the terms of the
 [MIT License](http://opensource.org/licenses/MIT).
