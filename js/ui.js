@@ -1,5 +1,6 @@
 import {
   calcAllTiers,
+  ENTROPY_PER_CAP,
   ENTROPY_PER_SYMBOL,
   ENTROPY_PER_WORD,
   formatCrackValue,
@@ -119,7 +120,7 @@ export function renderPassphrase(wordList) {
 export function displayWords(words, wordList, totalEntropy) {
   for (const obj of words) {
     totalEntropy += obj.entropy
-    wordList.push({ word: obj.word, wordNum: obj.wordNum })
+    wordList.push({ word: obj.word, wordNum: obj.wordNum, caps: 0 })
   }
 
   renderPassphrase(wordList)
@@ -127,10 +128,11 @@ export function displayWords(words, wordList, totalEntropy) {
 }
 
 export function setupFormatSelector(getWordList) {
-  for (const link of $$('.format-link')) {
+  for (const link of $$('.format-link[data-format]')) {
     link.addEventListener('click', (e) => {
       e.preventDefault()
-      for (const l of $$('.format-link')) l.classList.remove('active')
+      for (const l of $$('.format-link[data-format]'))
+        l.classList.remove('active')
       link.classList.add('active')
 
       currentFormat = link.dataset.format
@@ -162,6 +164,7 @@ function formatBestTime(years) {
 export function displayStats(wordList, totalEntropy) {
   const wordCount = wordList.filter((w) => w.wordNum.length === 5).length
   const symbolCount = wordList.filter((w) => w.wordNum.length === 2).length
+  const capsCount = wordList.reduce((sum, w) => sum + (w.caps || 0), 0)
 
   // Entropy card
   const breakdown = $('#entropyBreakdown')
@@ -180,13 +183,21 @@ export function displayStats(wordList, totalEntropy) {
       `${symbolCount} symbol${symbolCount !== 1 ? 's' : ''} \u00d7 ${ENTROPY_PER_SYMBOL.toFixed(2)} = ${symBits} bits`,
     )
   }
+  if (capsCount > 0) {
+    if (wordCount > 0 || symbolCount > 0)
+      breakdown.append(document.createElement('br'))
+    const capBits = (capsCount * ENTROPY_PER_CAP).toFixed(2)
+    breakdown.append(
+      `${capsCount} cap${capsCount !== 1 ? 's' : ''} \u00d7 ${ENTROPY_PER_CAP.toFixed(2)} = ${capBits} bits`,
+    )
+  }
   breakdown.append(document.createElement('br'))
   const total = document.createElement('strong')
   total.textContent = `Total: ${totalEntropy.toFixed(2)} bits`
   breakdown.append(total)
 
   // Crack time card — pass counts for exact BigInt keyspace calculation
-  const { tiers } = calcAllTiers(wordCount, symbolCount)
+  const { tiers } = calcAllTiers(wordCount, symbolCount, capsCount)
   const tbody = $('#crackTimeTiers')
   tbody.replaceChildren()
 

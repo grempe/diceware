@@ -9,6 +9,7 @@
 // BigInt exponentiation to avoid floating-point rounding.
 export const ENTROPY_PER_WORD = Math.log2(7776) // ~12.92 bits
 export const ENTROPY_PER_SYMBOL = Math.log2(36) // ~5.17 bits
+export const ENTROPY_PER_CAP = 1 // 1 bit per random capitalization
 
 export function calcEntropy(isSymbol) {
   return isSymbol ? ENTROPY_PER_SYMBOL : ENTROPY_PER_WORD
@@ -85,11 +86,15 @@ function crackTimeYears(halfKeySpace, guessesPerSec) {
 }
 
 // Calculate crack times for all attacker tiers.
-// The keyspace is computed exactly via BigInt exponentiation: 7776^words × 36^symbols.
+// The keyspace is computed exactly via BigInt exponentiation:
+//   7776^words × 36^symbols × 2^caps
 // This avoids the precision loss that would come from rounding fractional entropy
 // bits (e.g. 77.55) to an integer before computing 2^n.
-export function calcAllTiers(wordCount, symbolCount) {
-  const keySpace = 7776n ** BigInt(wordCount) * 36n ** BigInt(symbolCount)
+export function calcAllTiers(wordCount, symbolCount, capsCount = 0) {
+  const keySpace =
+    7776n ** BigInt(wordCount) *
+    36n ** BigInt(symbolCount) *
+    2n ** BigInt(capsCount)
   const halfKeySpace = keySpace / 2n
   return {
     keySpace,

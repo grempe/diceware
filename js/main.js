@@ -1,5 +1,5 @@
 import { secureRandom } from './crypto.js'
-import { calcEntropy } from './entropy.js'
+import { calcEntropy, ENTROPY_PER_CAP } from './entropy.js'
 import {
   displayMetadata,
   displayStats,
@@ -89,6 +89,51 @@ document.querySelector('#shuffleButton')?.addEventListener('click', () => {
   renderPassphrase(wordList)
 })
 
+// Random capitalization — each click capitalizes one random letter in a random
+// word, adding 1 bit of entropy per capitalization.  See:
+// http://world.std.com/~reinhold/dicewarefaq.html#capitalizing
+document.querySelector('#randomCapsLink')?.addEventListener('click', (e) => {
+  e.preventDefault()
+  if (wordList.length === 0) return
+
+  // Filter to words (not symbols) that have at least one lowercase letter
+  const candidates = []
+  for (let i = 0; i < wordList.length; i++) {
+    const w = wordList[i]
+    if (w.wordNum.length !== 5) continue
+    for (const ch of w.word) {
+      if (ch !== ch.toUpperCase()) {
+        candidates.push(i)
+        break
+      }
+    }
+  }
+  if (candidates.length === 0) return
+
+  // Pick a random word from candidates
+  const idx = candidates[secureRandom(candidates.length)]
+  const word = wordList[idx].word
+
+  // Find lowercase letter positions
+  const lowerPositions = []
+  for (let i = 0; i < word.length; i++) {
+    if (word[i] !== word[i].toUpperCase()) {
+      lowerPositions.push(i)
+    }
+  }
+
+  // Capitalize one random lowercase letter
+  const pos = lowerPositions[secureRandom(lowerPositions.length)]
+  const chars = [...word]
+  chars[pos] = chars[pos].toUpperCase()
+  wordList[idx].word = chars.join('')
+  wordList[idx].caps = (wordList[idx].caps || 0) + 1
+  totalEntropy += ENTROPY_PER_CAP
+
+  renderPassphrase(wordList)
+  displayStats(wordList, totalEntropy)
+})
+
 // Word generation buttons (event delegation)
 document.querySelector('#generateButtons')?.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-words]')
@@ -138,7 +183,7 @@ window.addEventListener('hashchange', () => {
 setRemoveTokenHandler((index) => {
   const removed = wordList.splice(index, 1)[0]
   const isSymbol = removed.wordNum.length === 2
-  totalEntropy -= calcEntropy(isSymbol)
+  totalEntropy -= calcEntropy(isSymbol) + (removed.caps || 0) * ENTROPY_PER_CAP
   if (totalEntropy < 0) totalEntropy = 0
 
   renderPassphrase(wordList)

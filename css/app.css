@@ -20,6 +20,16 @@ body > footer {
   padding-right: 1rem;
 }
 
+/* FAQ heading anchor links */
+main > section h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main > section h2 a:hover {
+  text-decoration: underline;
+}
+
 /* List metadata */
 .list-metadata {
   font-size: 0.75rem;
@@ -183,6 +193,15 @@ body > footer {
 .format-link.active {
   color: var(--pico-primary);
   text-decoration: underline;
+}
+
+#randomCapsLink {
+  --pico-color: var(--pico-muted-color);
+  --pico-text-decoration: none;
+  color: var(--pico-muted-color);
+  text-decoration: none;
+  border-left: 1px solid var(--pico-muted-border-color);
+  padding-left: 0.75rem;
 }
 
 /* Output card — lifted surface */
