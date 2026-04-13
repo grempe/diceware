@@ -1,11 +1,18 @@
 // Word lookup and list management.
-import { listMetadata, lists, special } from '../lists/registry.js'
+import {
+  availableListNames,
+  getList,
+  getListMetadata,
+  loadList,
+  special,
+} from '../lists/registry.js'
 import { calcEntropy } from './entropy.js'
 
 let currentList = 'eff'
 
-export function setCurrentList(name) {
-  if (name in lists) {
+export async function setCurrentList(name) {
+  if (availableListNames.includes(name)) {
+    await loadList(name)
     currentList = name
   }
 }
@@ -15,16 +22,16 @@ export function getCurrentList() {
 }
 
 export function getCurrentListMetadata() {
-  return listMetadata[currentList]
+  return getListMetadata(currentList)
 }
 
 export function getAvailableListNames() {
-  return Object.keys(lists)
+  return availableListNames
 }
 
 export function lookupWord(wordNum) {
   if (wordNum.length === 5) {
-    const word = lists[currentList]?.[wordNum] ?? lists.eff[wordNum]
+    const word = getList(currentList)?.[wordNum] ?? getList('eff')[wordNum]
     return { word, wordNum, entropy: calcEntropy(false) }
   }
   if (wordNum.length === 2) {

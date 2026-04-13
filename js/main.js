@@ -53,20 +53,22 @@ function getWords(numWords = 1, numRollsPerWord = 5) {
 }
 
 // Load list from URL hash on startup
-function initFromHash() {
+async function initFromHash() {
   const listName = window.location.hash.slice(1)
   const available = getAvailableListNames()
   if (available.includes(listName)) {
-    setCurrentList(listName)
+    await setCurrentList(listName)
   }
   reset()
 }
 
 // Language selection
-document.querySelector('#languageSelect')?.addEventListener('change', (e) => {
-  setCurrentList(e.target.value)
-  reset()
-})
+document
+  .querySelector('#languageSelect')
+  ?.addEventListener('change', async (e) => {
+    await setCurrentList(e.target.value)
+    reset()
+  })
 
 // Fisher-Yates (Knuth) shuffle using the CSPRNG.
 // On each iteration, element i is swapped with a uniformly random element from
@@ -170,10 +172,10 @@ document
   })
 
 // Hash change support
-window.addEventListener('hashchange', () => {
+window.addEventListener('hashchange', async () => {
   const listName = window.location.hash.slice(1)
   if (getAvailableListNames().includes(listName)) {
-    setCurrentList(listName)
+    await setCurrentList(listName)
     reset()
   }
 })
@@ -195,12 +197,12 @@ setRemoveTokenHandler((index) => {
   }
 })
 
-// Initialize
-setupCopyButtons()
-setupFormatSelector(() => wordList)
-initFromHash()
-
-// Set copyright year
+// Set copyright year (no dependency on list loading)
 for (const el of document.querySelectorAll('.current-year')) {
   el.textContent = new Date().getFullYear()
 }
+
+// Initialize
+setupCopyButtons()
+setupFormatSelector(() => wordList)
+await initFromHash()

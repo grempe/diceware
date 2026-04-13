@@ -92,6 +92,22 @@ If you want to be *really, really* secure, roll the dice with a flashlight
 under a black hood with a printout of the Diceware word list. No computers
 needed!
 
+## SEO & Metadata
+
+Both `index.html` and `faq.html` include SEO metadata that should be kept in
+sync when content changes:
+
+- **`sitemap.xml`** — Update `<lastmod>` dates when pages change
+- **`robots.txt`** — Points crawlers to the sitemap
+- **Open Graph / Twitter Card tags** — In `<head>` of both pages; update if
+  page titles or descriptions change
+- **JSON-LD structured data** — `index.html` has a `WebApplication` schema;
+  `faq.html` has a `FAQPage` schema with a `Question`/`Answer` entry for each
+  FAQ section. Add, remove, or edit entries in the JSON-LD block to match the
+  visible FAQ content
+- **Canonical URLs** — Each page has `<link rel="canonical">`; update if page
+  URLs change
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at

@@ -4,10 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Frequently asked questions about the Diceware passphrase generator." />
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="canonical" href="https://diceware.rempe.us/faq.html" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <meta name="theme-color" content="#13171f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fff" media="(prefers-color-scheme: light)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FAQ — Diceware Passphrase Generator" />
+    <meta property="og:description" content="Frequently asked questions about the Diceware passphrase generator." />
+    <meta property="og:url" content="https://diceware.rempe.us/faq.html" />
+    <meta property="og:site_name" content="Diceware Passphrase Generator" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="FAQ — Diceware Passphrase Generator" />
+    <meta name="twitter:description" content="Frequently asked questions about the Diceware passphrase generator." />
     <title>FAQ — Diceware Passphrase Generator</title>
     <link rel="stylesheet" href="css/pico.classless.min.css" />
     <link rel="stylesheet" href="css/app.css" />
+    <link rel="preconnect" href="https://static.cloudflareinsights.com" />
   </head>
 
   <body>
@@ -76,6 +88,11 @@
         <p>The <a href="https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases" target="_blank" rel="noopener">EFF word list</a> was designed to produce memorable, hard-to-confuse passphrases. Other word lists in 20+ languages are available via the language selector.</p>
       </section>
 
+      <section id="verification">
+        <h2><a href="#verification">What do the letter grades mean?</a></h2>
+        <p>Every word list is run through an automated verification suite that checks structural integrity (correct key format, no duplicates, no encoding errors) and quality metrics (prefix-free words, minimum word length, Unicode normalization). Results are scored as A&ndash;F: <strong>A</strong> means all checks pass, lower grades indicate quality warnings, and <strong>F</strong> means a structural failure. The grade badge, pass count, and a link to the full report appear below each list&rsquo;s title.</p>
+      </section>
+
       <section id="entropy">
         <h2><a href="#entropy">What is entropy?</a></h2>
         <p>Entropy measures how hard a passphrase is to guess. It depends on the method used to select it, not the passphrase itself. More entropy = harder to crack. A coin toss has 1 bit of entropy; each Diceware word adds ~12.92 bits.</p>
@@ -126,10 +143,122 @@
       </nav>
     </footer>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What changed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This app was originally built in 2016 with jQuery and Bootstrap. In 2026 it was fully modernized: all runtime dependencies were removed, the UI was rebuilt with semantic HTML and Pico CSS, and all JavaScript was rewritten as native ES modules. The core Diceware algorithm and word lists are unchanged. New features include multiple passphrase formats, click-to-remove word tokens, shuffle, automatic dark mode, and crack time estimates for multiple attacker tiers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pick a number (5\u20139) to generate that many words. The numbered buttons generate a fresh passphrase each time. Use +1 to append a word or +sym to append a special character. Shuffle randomly reorders your passphrase. Click any word token to remove it. You can also roll physical dice and type a 5-digit result (word) or 2-digit result (symbol) using digits 1\u20136, then press Enter. Choose a format (spaces, hyphens, PascalCase, etc.) and copy the result."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most people, yes. The app uses your browser\u2019s built-in cryptographic random number generator to simulate dice rolls. No data leaves your browser. If you face a nation-state level adversary, the Diceware FAQ recommends rolling physical dice and looking up words manually."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is randomness generated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All randomness comes from crypto.getRandomValues(), the cryptographically secure random number generator built into modern browsers. A rejection sampling algorithm ensures unbiased die roll simulation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this send data anywhere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Your passphrase, die rolls, and settings never leave your browser. The app works entirely offline after the initial page load."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is the code served from?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Everything is static HTML, JavaScript, and CSS \u2014 no server, no database. The code has zero runtime dependencies. The only external file is Pico CSS, vendored locally. All source is on GitHub."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is the EFF word list the default?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The EFF word list was designed to produce memorable, hard-to-confuse passphrases. Other word lists in 20+ languages are available via the language selector."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do the letter grades mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every word list is run through an automated verification suite that checks structural integrity (correct key format, no duplicates, no encoding errors) and quality metrics (prefix-free words, minimum word length, Unicode normalization). Results are scored as A\u2013F: A means all checks pass, lower grades indicate quality warnings, and F means a structural failure. The grade badge, pass count, and a link to the full report appear below each list\u2019s title."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is entropy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Entropy measures how hard a passphrase is to guess. It depends on the method used to select it, not the passphrase itself. More entropy = harder to crack. A coin toss has 1 bit of entropy; each Diceware word adds ~12.92 bits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is entropy calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each word contributes log\u2082(7776) \u2248 12.92 bits (one of 7,776 possibilities from five dice). Each symbol contributes log\u2082(36) \u2248 5.16 bits (one of 36 possibilities from two dice). The total entropy is the sum, and the app tracks words and symbols separately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does rAnDomCaps do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each click on rAnDomCaps randomly selects one word in your passphrase and capitalizes one of its letters, both chosen at random. Each capitalization adds 1 bit of entropy because the attacker must now check both cases for that character position. Multiple clicks accumulate \u2014 three clicks add 3 bits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I run this locally?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Clone the repository and serve it with any local HTTP server. It works completely offline. No install or build step required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Would XKCD approve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes."
+          }
+        }
+      ]
+    }
+    </script>
     <script type="module">
       for (const el of document.querySelectorAll('.current-year')) {
-                                el.textContent = new Date().getFullYear()
-                              }
+                                      el.textContent = new Date().getFullYear()
+                                    }
     </script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "27571f97ddcb414b94714fd30d6f3d63"}'></script><!-- End Cloudflare Web Analytics -->
   </body>

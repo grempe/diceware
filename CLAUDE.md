@@ -54,13 +54,14 @@ Zero runtime dependencies. The only external CSS is Pico CSS v2 (vendored locall
 
 ### Word Lists
 
-- **`lists/registry.js`** — Import hub mapping list IDs to word maps (replaces switch statement)
+- **`lists/registry.js`** — Lazy-loading registry mapping list IDs to word maps via dynamic `import()`; only the default EFF list and special characters are loaded eagerly
 - **`lists/*.js`** — ES modules exporting `const` objects with 7776 entries keyed by 5-digit die rolls
 - **`lists/special.js`** — 36 special characters keyed by 2-digit die rolls
 
 ### HTML/CSS
 
-- **`index.html`** — Semantic HTML with Pico CSS classless styling. FAQ uses native `<details>` elements
+- **`index.html`** — Semantic HTML with Pico CSS classless styling
+- **`faq.html`** — FAQ page with `<details>`-style sections
 - **`css/pico.classless.min.css`** — Vendored Pico CSS v2 (do not edit)
 - **`css/app.css`** — Minimal custom styles on top of Pico
 
@@ -70,8 +71,18 @@ Zero runtime dependencies. The only external CSS is Pico CSS v2 (vendored locall
 - **Zero runtime dependencies** — all JS is vanilla, CSS is vendored Pico only
 - **Auditable** — users can clone and inspect all code for trust
 - **Offline-capable** — works without network after initial load
-- **Word list registry** — `lists[currentList][wordNum]` replaces 21-case switch statement
+- **Lazy-loaded word lists** — only the default EFF list loads eagerly; others load on demand via dynamic `import()`
 - **URL hash** — reflects active word list, supports direct linking
+
+## SEO & Metadata Maintenance
+
+Both `index.html` and `faq.html` contain SEO metadata that must be kept in sync with content changes:
+
+- **`sitemap.xml`** — Update `<lastmod>` dates when pages change
+- **`robots.txt`** — Points crawlers to the sitemap
+- **Open Graph / Twitter Card tags** — In `<head>` of both pages. Update `og:title`, `og:description`, and `twitter:*` tags if the page title or description changes
+- **JSON-LD structured data** — `index.html` has a `WebApplication` schema; `faq.html` has a `FAQPage` schema. When adding, removing, or editing FAQ entries, update the corresponding `Question`/`Answer` pair in the `FAQPage` JSON-LD block at the bottom of `faq.html`
+- **Canonical URLs** — Each page has `<link rel="canonical">`. Update if page URLs change
 
 ## Code Style
 

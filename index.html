@@ -3,11 +3,24 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="An easy way to generate a Diceware passphrase or password." />
-    <link rel="shortcut icon" href="favicon.ico" />
+    <meta name="description" content="Generate secure Diceware passphrases in 22 languages using your browser's random number generator. Open source, zero dependencies, no data leaves your browser." />
+    <link rel="canonical" href="https://diceware.rempe.us/" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <meta name="theme-color" content="#13171f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fff" media="(prefers-color-scheme: light)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Diceware Secure Passphrase and Password Generator" />
+    <meta property="og:description" content="Generate secure Diceware passphrases in 22 languages. No data leaves your browser." />
+    <meta property="og:url" content="https://diceware.rempe.us/" />
+    <meta property="og:site_name" content="Diceware Passphrase Generator" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Diceware Secure Passphrase and Password Generator" />
+    <meta name="twitter:description" content="Generate secure Diceware passphrases in 22 languages. No data leaves your browser." />
     <title>Diceware Secure Passphrase and Password Generator</title>
     <link rel="stylesheet" href="css/pico.classless.min.css" />
     <link rel="stylesheet" href="css/app.css" />
+    <link rel="modulepreload" href="js/main.js" />
+    <link rel="preconnect" href="https://static.cloudflareinsights.com" />
   </head>
 
   <body>
@@ -154,15 +167,39 @@
       </nav>
     </footer>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Diceware Passphrase Generator",
+      "url": "https://diceware.rempe.us/",
+      "description": "Generate cryptographically secure Diceware passphrases using your browser's random number generator. Supports 22 languages. No data leaves your browser.",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires a modern browser with crypto.getRandomValues() support",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Glenn Rempe",
+        "url": "https://www.rempe.us/"
+      },
+      "isAccessibleForFree": true,
+      "inLanguage": ["en", "eu", "ca", "cs", "da", "nl", "eo", "fi", "fr", "de", "hu", "it", "ja", "mi", "nb", "pl", "ru", "es", "sv"]
+    }
+    </script>
     <script>
       if (location.protocol === 'file:') {
-                          document.body.innerHTML = '<main><h1>Local server required</h1>' +
-                            '<p>This app uses ES modules, which browsers block on <code>file://</code> URLs. ' +
-                            'Serve it with a local HTTP server instead:</p>' +
-                            '<pre><code>cd diceware\ncaddy run</code></pre>' +
-                            '<p>Or: <code>python3 -m http.server 8080</code></p>' +
-                            '<p>Then open <a href="http://localhost:8080">http://localhost:8080</a></p></main>'
-                        }
+                                document.body.innerHTML = '<main><h1>Local server required</h1>' +
+                                  '<p>This app uses ES modules, which browsers block on <code>file://</code> URLs. ' +
+                                  'Serve it with a local HTTP server instead:</p>' +
+                                  '<pre><code>cd diceware\ncaddy run</code></pre>' +
+                                  '<p>Or: <code>python3 -m http.server 8080</code></p>' +
+                                  '<p>Then open <a href="http://localhost:8080">http://localhost:8080</a></p></main>'
+                              }
     </script>
     <script type="module" src="js/main.js"></script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "27571f97ddcb414b94714fd30d6f3d63"}'></script><!-- End Cloudflare Web Analytics -->

@@ -1,77 +1,57 @@
 // Word list registry — maps list IDs to their word maps and metadata.
+// Only the default list (EFF) and special characters are loaded eagerly.
+// All other lists are loaded on demand via dynamic import().
 
-import { alternative, metadata as alternativeMeta } from './alternative.js'
-import { basque, metadata as basqueMeta } from './basque.js'
-import { catalan, metadata as catalanMeta } from './catalan.js'
-import { czech, metadata as czechMeta } from './czech.js'
-import { danish, metadata as danishMeta } from './danish.js'
-import { diceware, metadata as dicewareMeta } from './diceware.js'
-import { dutch, metadata as dutchMeta } from './dutch.js'
 import { eff, metadata as effMeta } from './eff.js'
-import { esperanto, metadata as esperantoMeta } from './esperanto.js'
-import { finnish, metadata as finnishMeta } from './finnish.js'
-import { french, metadata as frenchMeta } from './french.js'
-import { german_dereko, metadata as germanDerekoMeta } from './german-dereko.js'
-import { german, metadata as germanTenneMeta } from './german-tenne.js'
-import { hungarian, metadata as hungarianMeta } from './hungarian.js'
-import { italian, metadata as italianMeta } from './italian.js'
-import { japanese, metadata as japaneseMeta } from './japanese.js'
-import { maori, metadata as maoriMeta } from './maori.js'
-import { norwegian, metadata as norwegianMeta } from './norwegian.js'
-import { polish, metadata as polishMeta } from './polish.js'
-import { russian, metadata as russianMeta } from './russian.js'
-import { spanish, metadata as spanishMeta } from './spanish.js'
 import { special } from './special.js'
-import { swedish, metadata as swedishMeta } from './swedish.js'
 
-export const lists = {
-  eff,
-  diceware,
-  alternative,
-  basque,
-  catalan,
-  czech,
-  danish,
-  dutch,
-  esperanto,
-  finnish,
-  french,
-  'german-dereko': german_dereko,
-  'german-tenne': german,
-  hungarian,
-  italian,
-  japanese,
-  maori,
-  norwegian,
-  polish,
-  russian,
-  spanish,
-  swedish,
+// Lazy loaders for each list — dynamic import() is cached by the browser
+const listLoaders = {
+  eff: null,
+  diceware: () => import('./diceware.js'),
+  alternative: () => import('./alternative.js'),
+  basque: () => import('./basque.js'),
+  catalan: () => import('./catalan.js'),
+  czech: () => import('./czech.js'),
+  danish: () => import('./danish.js'),
+  dutch: () => import('./dutch.js'),
+  esperanto: () => import('./esperanto.js'),
+  finnish: () => import('./finnish.js'),
+  french: () => import('./french.js'),
+  'german-dereko': () => import('./german-dereko.js'),
+  'german-tenne': () => import('./german-tenne.js'),
+  hungarian: () => import('./hungarian.js'),
+  italian: () => import('./italian.js'),
+  japanese: () => import('./japanese.js'),
+  maori: () => import('./maori.js'),
+  norwegian: () => import('./norwegian.js'),
+  polish: () => import('./polish.js'),
+  russian: () => import('./russian.js'),
+  spanish: () => import('./spanish.js'),
+  swedish: () => import('./swedish.js'),
 }
 
-export const listMetadata = {
-  eff: effMeta,
-  diceware: dicewareMeta,
-  alternative: alternativeMeta,
-  basque: basqueMeta,
-  catalan: catalanMeta,
-  czech: czechMeta,
-  danish: danishMeta,
-  dutch: dutchMeta,
-  esperanto: esperantoMeta,
-  finnish: finnishMeta,
-  french: frenchMeta,
-  'german-dereko': germanDerekoMeta,
-  'german-tenne': germanTenneMeta,
-  hungarian: hungarianMeta,
-  italian: italianMeta,
-  japanese: japaneseMeta,
-  maori: maoriMeta,
-  norwegian: norwegianMeta,
-  polish: polishMeta,
-  russian: russianMeta,
-  spanish: spanishMeta,
-  swedish: swedishMeta,
+const lists = { eff }
+const listMetadata = { eff: effMeta }
+
+export const availableListNames = Object.keys(listLoaders)
+
+export async function loadList(id) {
+  if (lists[id]) return
+  const loader = listLoaders[id]
+  if (!loader) return
+  const mod = await loader()
+  const wordListKey = Object.keys(mod).find((k) => k !== 'metadata')
+  lists[id] = mod[wordListKey]
+  listMetadata[id] = mod.metadata
+}
+
+export function getList(id) {
+  return lists[id]
+}
+
+export function getListMetadata(id) {
+  return listMetadata[id]
 }
 
 export { special }
