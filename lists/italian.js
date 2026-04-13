@@ -6739,7 +6739,7 @@ export const italian = {
   62166: 'terso',
   62211: 'terzi',
   62212: 'terzo',
-  62213: 'tesa ',
+  62213: 'tesa',
   62214: 'teschi',
   62215: 'tesina',
   62216: 'tesla',

@@ -3482,7 +3482,7 @@ export const polish = {
   35132: 'kv',
   35133: 'kw',
   35134: 'kwa',
-  35135: 'kWA',
+  35135: 'razem',
   35136: 'kwacz',
   35141: 'kwadra',
   35142: 'kwant',
