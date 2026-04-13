@@ -1,0 +1,34 @@
+# Version control
+.git
+.jj
+
+# Dev tooling & dependencies
+node_modules
+.playwright-cli
+.task
+.tool-versions
+package.json
+package-lock.json
+deno.lock
+biome.json
+Taskfile.yml
+
+# Dev/build tools
+tools
+
+# Documentation & meta
+README.md
+CLAUDE.md
+LICENSE
+CNAME
+.nojekyll
+.editorconfig
+.gitignore
+
+# GitHub config
+.github
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore

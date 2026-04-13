@@ -39,6 +39,8 @@ All tasks are defined in `Taskfile.yml`. Run `task` to list them.
 - `task verify-check` — quick read-only verification (tiers 1+2, no writes)
 - `task precommit` — run all precommit checks (lint + full verification)
 - `task install` — install npm dependencies (runs automatically as a dependency of lint tasks)
+- `task docker-build` — build Docker image locally
+- `task docker-run` — build and run Docker container on http://localhost:8080
 
 ## Architecture
 
@@ -83,6 +85,18 @@ Both `index.html` and `faq.html` contain SEO metadata that must be kept in sync 
 - **Open Graph / Twitter Card tags** — In `<head>` of both pages. Update `og:title`, `og:description`, and `twitter:*` tags if the page title or description changes
 - **JSON-LD structured data** — `index.html` has a `WebApplication` schema; `faq.html` has a `FAQPage` schema. When adding, removing, or editing FAQ entries, update the corresponding `Question`/`Answer` pair in the `FAQPage` JSON-LD block at the bottom of `faq.html`
 - **Canonical URLs** — Each page has `<link rel="canonical">`. Update if page URLs change
+
+## Docker
+
+The app is containerized using Caddy on Alpine Linux. GitHub Actions builds and publishes multi-platform images (amd64 + arm64) to `ghcr.io/grempe/diceware` on every push to `main` or `v*` tag.
+
+- **`Dockerfile`** — Based on `caddy:2-alpine`, copies only production static assets into `/srv`
+- **`Caddyfile.production`** — Production Caddy config (separate from dev `Caddyfile`): compression, security headers, cache rules, admin API disabled
+- **`docker-compose.yml`** — Local development: builds and runs on port 8080 with healthcheck
+- **`.github/workflows/docker-publish.yml`** — CI/CD: multi-arch build, ghcr.io publish, SLSA provenance attestation
+- **`.dockerignore`** — Excludes dev tooling, VCS dirs, and documentation from the build context
+
+When modifying served content (HTML, CSS, JS, word lists, reports), ensure the `Dockerfile` `COPY` directives still cover the new files.
 
 ## Code Style
 

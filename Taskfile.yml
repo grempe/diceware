@@ -51,6 +51,17 @@ tasks:
     cmds:
       - deno run --allow-read --allow-env tools/verify-lists.ts {{.CLI_ARGS}}
 
+  docker-build:
+    desc: Build Docker image locally
+    cmds:
+      - docker compose build
+
+  docker-run:
+    desc: Run Docker container locally on http://localhost:8080
+    deps: [docker-build]
+    cmds:
+      - docker compose up
+
   precommit:
     desc: Run all precommit checks (format + lint + full verification)
     deps: [install]

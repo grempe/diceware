@@ -1,0 +1,25 @@
+{
+	admin off
+}
+
+:8080 {
+	root * /srv
+	file_server
+
+	encode zstd gzip
+
+	header {
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+	}
+
+	# Cache static assets aggressively (CSS, JS, favicon)
+	@static path *.css *.js *.ico
+	header @static Cache-Control "public, max-age=86400, must-revalidate"
+
+	# HTML pages — short cache, revalidate
+	@html path *.html /
+	header @html Cache-Control "public, max-age=300, must-revalidate"
+}
