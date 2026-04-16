@@ -1,3 +1,4 @@
 node_modules/
 .playwright-cli/
 .task/
+.claude/settings.local.json
