@@ -12,6 +12,6 @@
   "author": "Glenn Rempe <glenn@rempe.us>",
   "license": "MIT",
   "devDependencies": {
-    "@biomejs/biome": "^2.4.12"
+    "@biomejs/biome": "^2.4.14"
   }
 }
